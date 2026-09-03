@@ -42,7 +42,10 @@ public class MinimapManager : MonoBehaviour
             (viewPos.y - 0.5f) * size.y
         );
 
+        //마크 배치
         playerMark.anchoredPosition = localPos;
+        //마크 회전
+        playerMark.localEulerAngles = new Vector3(0f, 0f, -playerTransform.eulerAngles.y);
     }
 
     /// <summary>

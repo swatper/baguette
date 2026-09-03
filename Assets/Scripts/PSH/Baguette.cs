@@ -85,7 +85,6 @@ public class Baguette : MonoBehaviour
     {
         if ((collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Floor")) && isThrow)
         {
-            Debug.Log("빵 고정");
             SetStuck(collision);
         }
         else if (collision.gameObject.CompareTag("Enemy"))

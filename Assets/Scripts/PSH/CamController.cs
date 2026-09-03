@@ -7,7 +7,7 @@ public class CamController : MonoBehaviour
     public Transform scopeTransform;
     [Header("카메라 설정")]
     public float camRotateSpeed;
-    public float adsSpeed = 15f;
+    public float zoomTime = 15f;
     float maxPitch = 45f;
     float minPitch = -50f;
     [SerializeField] float mouseX;   //마우스 좌우
@@ -74,14 +74,13 @@ public class CamController : MonoBehaviour
                 else
                 {
                     //전환 연출 구간
-                    transform.position = Vector3.Lerp(transform.position, scopeTransform.position, Time.deltaTime * adsSpeed);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, camRotation, Time.deltaTime * adsSpeed);
-                    weapon.rotation = Quaternion.Slerp(weapon.rotation, camRotation, Time.deltaTime * adsSpeed);
-
-                    // 목표 지점에 근접하면 즉시 조준 완료 상태로 락(Lock)
-                    if (Vector3.Distance(transform.position, scopeTransform.position) < 0.15f)
+                    transform.position = Vector3.Lerp(transform.position, scopeTransform.position, Time.deltaTime * zoomTime);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, camRotation, Time.deltaTime * zoomTime);
+                    weapon.rotation = Quaternion.Slerp(weapon.rotation, camRotation, Time.deltaTime * zoomTime);
+                    if (Vector3.Distance(transform.position, scopeTransform.position) < 0.01f)
                     {
                         isAimingDone = true;
+                        //위치 보정
                         transform.position = scopeTransform.position;
                         transform.rotation = camRotation;
                         weapon.rotation = camRotation;

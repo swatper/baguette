@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     [Header("플레이어 상태")]
     public bool isDead = false;
     public bool isGround = true;
+    [Tooltip("UI 읽고 있는 상태")]
+    [SerializeField] private bool isReadMode = false;
     [SerializeField] float walkSpeed;
     [Tooltip("플레이어 최대 체력")]
     [SerializeField] private int maxHealth = 5;
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour
     void CheckKeyboardInput()
     {
         //사망 시 입력 무시
-        if (isDead)
+        if (isDead || isReadMode)
             return;
         MovePlayer();
         JumpPlayer();
@@ -148,7 +150,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 플레이어 공격
+    /// 플레이어 공격(근접, 조준, 원거리)
     /// </summary>
     void AttackPlayer()
     {
@@ -171,9 +173,7 @@ public class PlayerController : MonoBehaviour
                 camController.CameraAim(true);
                 weaponHandler.ShowThrowPath();
                 weaponHandler.StartAimingTime();
-
             }
-
         }
         // 우클릭 해제 시 카메라 줌아웃
         else if (Input.GetMouseButtonUp(1))
@@ -216,11 +216,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetShopInteration(ShopKeeper shopKeeper) => shop = shopKeeper;
-    public void RemoveShopInteration() => shop = null;
-    public void SetBreadShopInteration(Patissier patissier) => bread = patissier;
-    public void RemoveBreadShopInteration() => bread = null;
 
+    #region 가게 상호 작용
+    /// <summary>
+    /// 플레이어가 UI 진입 시, 키 입력을 막기 위한 함수
+    /// </summary>
+    /// <param name="readMode">0: 읽기 종료 | 1: 읽기 시작</param>
+    public void SetPlayerReadMode(bool readMode)
+    {
+        isReadMode = readMode;
+    }
+    public void SetShopInteration(ShopKeeper shopKeeper)
+    {
+        shop = shopKeeper;
+    }
+    public void RemoveShopInteration()
+    {
+        shop = null;
+    }
+    public void SetBreadShopInteration(Patissier patissier)
+    {
+        bread = patissier;
+    }
+    public void RemoveBreadShopInteration()
+    {
+        bread = null;
+    }
+    #endregion
 
     #endregion
 
