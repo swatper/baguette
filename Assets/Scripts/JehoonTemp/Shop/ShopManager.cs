@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Unity.Profiling;
+using Unity.VisualScripting;
+using System.Linq;
 
 public class ShopManager : MonoBehaviour
 {
@@ -26,7 +28,7 @@ public class ShopManager : MonoBehaviour
     [Tooltip("버터 가격")]
     [SerializeField] private float butterPrice = 3.50f;
     [Tooltip("에어컨 가격")]
-    [SerializeField] private float airConditionerPrice = 10.00f;
+    [SerializeField] private float airConditionerPrice;
 
 
     [Tooltip("현재 돈 Text")]
@@ -34,11 +36,14 @@ public class ShopManager : MonoBehaviour
 
 
     #region 스탯 강화 관련 변수
+    [Space(25)]
     [Tooltip("최대 체력 강화 구매 버튼")]
     [SerializeField] private Button healthButton;
-    [Tooltip("최대 체력 강화 레벨")]
+    [Tooltip("체력 강화 레벨")]
+    // 체력은 레벨별로 5 + 레벨 * 1, 최대 11레벨까지(최대치 15). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
+    public StoreStatUpgrade hpData;
+    [SerializeField] private Stat curHp;
     [SerializeField] private int healthLevel = 1;
-    [Tooltip("최대 체력 강화 가격")]
     [SerializeField] private float healthPrice = 5.00f;
     [Tooltip("최대 체력 강화 가격 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI healthPriceText;
@@ -46,13 +51,14 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI healthText;
     [Tooltip("레벨업 시 체력 수치 Text")]
     [SerializeField] private TMPro.TextMeshProUGUI healthUpgradeText;
-
-
+    [Space(25)]
     [Tooltip("빵 소지 최대치 구매 버튼")]
     [SerializeField] private Button breadButton;
-    [Tooltip("빵 소지 최대치 강화 레벨")]
+    [Tooltip("빵 소지강화 레벨")]
+    // 빵 소지 최대치는 레벨별로 5 + 레벨 * 2, 최대 11레벨까지(최대치 25). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
+    public StoreStatUpgrade breadData;
+    [SerializeField] private Stat curBread;
     [SerializeField] private int breadLevel = 1;
-    [Tooltip("빵 소지 최대치 강화 가격")]
     [SerializeField] private float breadPrice = 5.00f;
     [Tooltip("빵 소지 최대치 강화 가격 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI breadPriceText;
@@ -60,7 +66,11 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI breadText;
     [Tooltip("레벨업 시 빵 소지 최대치 수치 Text")]
     [SerializeField] private TMPro.TextMeshProUGUI breadUpgradeText;
-    [Tooltip("이동속도 강화 구매 버튼")]
+    [Space(25)]
+    [Tooltip("이동속도 강화")]
+    // 이동속도는 레벨별로 1 + 레벨 * 0.1, 최대 5레벨까지(최대치 1.5). 업그레이드 가격은 레벨별로 15 + 레벨 * 7.5
+    public StoreStatUpgrade speedData;
+    [SerializeField] private Stat curSpeed;
     [SerializeField] private Button speedButton;
     [Tooltip("이동속도 강화 레벨")]
     [SerializeField] private int speedLevel = 1;
@@ -72,6 +82,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI speedText;
     [Tooltip("레벨업 시 이동속도 수치 Text")]
     [SerializeField] private TMPro.TextMeshProUGUI speedUpgradeText;
+    [Space(25)]
     #endregion
 
     #region 소모품 강화 관련 변수
@@ -103,6 +114,10 @@ public class ShopManager : MonoBehaviour
         //InitValueText();
         SetValueText();
         ButtonInitiate();
+        //초기화
+        SetHealthValue();
+        SetBreadValue();
+        SetSpeedValue();
     }
 
     // Update is called once per frame
@@ -141,7 +156,7 @@ public class ShopManager : MonoBehaviour
         healthUpgradeText.text = (player.GetComponent<PlayerController>().GetMaxHealth() + 1).ToString();
         healthPriceText.text = "€ " + healthPrice.ToString("F2");
 
-        if (healthLevel >= 11)
+        if (healthLevel > (hpData.upgradeTable.Count - 1))
         {
             healthText.text = 15.ToString();
             healthUpgradeText.text = 15.ToString();
@@ -158,7 +173,7 @@ public class ShopManager : MonoBehaviour
         breadUpgradeText.text = (breadCounter.GetMaxBread() + 2).ToString();
         breadPriceText.text = "€ " + breadPrice.ToString("F2");
 
-        if (breadLevel >= 11)
+        if (breadLevel > (breadData.upgradeTable.Count - 1))
         {
             breadText.text = 25.ToString();
             breadUpgradeText.text = 25.ToString();
@@ -175,7 +190,7 @@ public class ShopManager : MonoBehaviour
         speedUpgradeText.text = (1 + speedLevel * 0.1f).ToString("F1");
         speedPriceText.text = "€ " + speedPrice.ToString("F2");
 
-        if (speedLevel >= 6)
+        if (speedLevel > (speedData.upgradeTable.Count - 1))
         {
             speedText.text = 1.5.ToString();
             speedUpgradeText.text = 1.5.ToString();
@@ -254,8 +269,7 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void SetHealthValue()
     {
-        // 체력은 레벨별로 5 + 레벨 * 1, 최대 11레벨까지(최대치 15). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
-        if (healthLevel >= 11)
+        if (healthLevel > hpData.upgradeTable.Count)
         {
             SetHealthValueText();
             ButtonInitiate();
@@ -264,11 +278,12 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        Managers.Money.Money -= healthPrice;
+        Managers.Money.Money -= curHp.price;
+        //데이터 변경
         healthLevel += 1;
-
-        player.GetComponent<PlayerController>().SetMaxHealth(5 + (healthLevel - 1));
-        healthPrice = 5 + (healthLevel - 1) * 2.5f;
+        curHp = hpData.upgradeTable[healthLevel];
+        player.GetComponent<PlayerController>().SetMaxHealth((int)curHp.amount);
+        healthPrice = curHp.price;
 
         curMoneyText.text = "€ " + Managers.Money.Money.ToString("F2");
         SetHealthValueText();
@@ -282,8 +297,7 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void SetBreadValue()
     {
-        // 빵 소지 최대치는 레벨별로 5 + 레벨 * 2, 최대 11레벨까지(최대치 25). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
-        if (breadLevel >= 11)
+        if (breadLevel > breadData.upgradeTable.Count)
         {
             SetBreadValueText();
             ButtonInitiate();
@@ -295,11 +309,12 @@ public class ShopManager : MonoBehaviour
         wHandler.UpgradeMaxBread(2);
 
         //UI에 표시 글 수정
-        Managers.Money.Money -= breadPrice;
+        Managers.Money.Money -= curBread.price;
         breadLevel += 1;
+        curBread = breadData.upgradeTable[breadLevel];
 
-        breadCounter.SetMaxBread(5 + (breadLevel - 1) * 2);
-        breadPrice = 5 + (breadLevel - 1) * 2.5f;
+        breadCounter.SetMaxBread((int)curBread.amount);
+        breadPrice = curBread.price;
 
         curMoneyText.text = "€ " + Managers.Money.Money.ToString("F2");
         SetBreadValueText();
@@ -313,32 +328,31 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void SetSpeedValue()
     {
-        // 이동속도는 레벨별로 1 + 레벨 * 0.1, 최대 5레벨까지(최대치 1.5). 업그레이드 가격은 레벨별로 15 + 레벨 * 7.5
-        if (speedLevel >= 6)
+        if (speedLevel > speedData.upgradeTable.Count)
         {
             SetSpeedValueText();
             ButtonInitiate();
             return;
         }
-        Managers.Money.Money -= speedPrice;
+        Managers.Money.Money -= curSpeed.price;
         speedLevel += 1;
 
+        curSpeed = speedData.upgradeTable[speedLevel];
 
-        float newPlayerSpeed = 10 * (1 + (speedLevel - 1) * 0.1f);
         // 파워업 여부에 따라 바로 플레이어 스피드를 설정할지, 혹은 파워업 종료 후 복귀속도를 바꿀지 결정
         Debug.Log("IsDrinkPowerUp: " + powerUpManager.GetIsDrinkPowerUp());
         if (powerUpManager.GetIsDrinkPowerUp())
         {
             // 파워업이 되어 있다면 파워업 종료 후 복귀 속도를 바꾼다
-            powerUpManager.SetPlayerInitialSpeed(newPlayerSpeed);
+            powerUpManager.SetPlayerInitialSpeed(curSpeed.amount);
         }
         else
         {
             // 파워업이 안돼 있으면 바로 플레이어 이동속도를 바꾼다
-            player.GetComponent<PlayerController>().SetPlayerSpeed(newPlayerSpeed);
-            powerUpManager.SetPlayerInitialSpeed(newPlayerSpeed);
+            player.GetComponent<PlayerController>().SetPlayerSpeed(curSpeed.amount);
+            powerUpManager.SetPlayerInitialSpeed(curSpeed.amount);
         }
-        speedPrice = 15 + (speedLevel - 1) * 7.5f;
+        speedPrice = curSpeed.price;
 
         curMoneyText.text = "€ " + Managers.Money.Money.ToString("F2");
         SetSpeedValueText();
