@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using UnityEngine.UI;
 
 public class WeaponHandler : MonoBehaviour
 {
+    [SerializeField] GameObject scope;
     [SerializeField] private CamController camController;
     [SerializeField] private Animator weaponHandlerAni;
+    [Header("에이밍 UI")]
+    [SerializeField] private Slider aimingProgressbar;
+    [SerializeField] private Image fillColor;
 
     [Header("무기 설정")]
     [Tooltip("무기 프리팹(바게트 빵)")]
@@ -132,14 +137,14 @@ public class WeaponHandler : MonoBehaviour
         if (isCooldown || (curKeepTime < aimingKeepTime))
         {
             camController.CameraAim(false);
-            RemoveThrowPath();
+            EndThrowReady();
             return;
         }
         else if (curBread < 1)
         {
             //던지기 직전에 빵이 없으면 줌 해제
             camController.CameraAim(false);
-            RemoveThrowPath();
+            EndThrowReady();
             return;
         }
         else
@@ -168,18 +173,24 @@ public class WeaponHandler : MonoBehaviour
         return isCooldown;
     }
 
-    public void ShowThrowPath()
+    public void StartThrowReady()
     {
+        aimingProgressbar.gameObject.SetActive(true);
+        //경로 표시
         throwPathRaycast.DrowThrowPath();
     }
 
     /// <summary>
     /// 내부에서 사용할 경로 제거
     /// </summary>
-    void RemoveThrowPath()
+    void EndThrowReady()
     {
+        curKeepTime = 0.0f;
+        fillColor.color = Color.white;
+        aimingProgressbar.gameObject.SetActive(false);
         throwPathRaycast.HideThrowPath();
     }
+
 
     #endregion
 
@@ -223,7 +234,6 @@ public class WeaponHandler : MonoBehaviour
     /// </summary>
     IEnumerator ThrowCooldown()
     {
-
         float curCoolTime = 0;
         while (curCoolTime < throwCooldownTime)
         {
@@ -244,20 +254,24 @@ public class WeaponHandler : MonoBehaviour
         //카메라 줌 아웃(3인칭으로 변경)
         camController.CameraAim(false);
         yield return null;
-        RemoveThrowPath();
+        EndThrowReady();
     }
 
     IEnumerator CheckAimingTime()
     {
-        curKeepTime = 0.0f;
-        float interval = 0.1f;
-
         //재장전 시간 동안 조준 상태 유지
-        while (true)
+        while (curKeepTime < aimingKeepTime)
         {
-            curKeepTime += interval;
-            yield return new WaitForSeconds(interval);
+            curKeepTime += Time.deltaTime;
+            aimingProgressbar.value = Mathf.Clamp01(curKeepTime / aimingKeepTime);
+            //카메라 위치 보정
+            if (curKeepTime > 0.15)
+                camController.TranslateCametaFoce(scope.transform.position);
+            yield return null;
         }
+        curKeepTime = aimingKeepTime;
+        aimingProgressbar.value = 1.0f;
+        fillColor.color = Color.red;
     }
     #endregion
 }

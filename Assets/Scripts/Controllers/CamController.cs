@@ -81,7 +81,7 @@ public class CamController : MonoBehaviour
                     {
                         isAimingDone = true;
                         //위치 보정
-                        transform.position = scopeTransform.position;
+                        TranslateCametaFoce(scopeTransform.position);
                         transform.rotation = camRotation;
                         weapon.rotation = camRotation;
                     }
@@ -97,6 +97,14 @@ public class CamController : MonoBehaviour
                 weapon.localRotation = Quaternion.Euler(0, 0, 0);
             }
         }
+    }
+
+    /// <summary>
+    /// 카메라 위치 강제 이동 or 보정
+    /// </summary>
+    public void TranslateCametaFoce(Vector3 location)
+    {
+        transform.position = location;
     }
 
 }

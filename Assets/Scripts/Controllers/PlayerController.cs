@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
                     return;
                 isThrowReady = true;
                 camController.CameraAim(true);
-                weaponHandler.ShowThrowPath();
+                weaponHandler.StartThrowReady();
                 weaponHandler.StartAimingTime();
             }
         }
