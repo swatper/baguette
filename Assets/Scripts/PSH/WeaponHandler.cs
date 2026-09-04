@@ -271,7 +271,7 @@ public class WeaponHandler : MonoBehaviour
         }
         curKeepTime = aimingKeepTime;
         aimingProgressbar.value = 1.0f;
-        fillColor.color = Color.red;
+        fillColor.color = Color.green;
     }
     #endregion
 }

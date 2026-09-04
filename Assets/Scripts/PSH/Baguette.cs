@@ -109,6 +109,10 @@ public class Baguette : MonoBehaviour
                 enemy.EnemyHit(curDamage, transform.root.position);
             }
         }
+        else if (collision.CompareTag("Item"))
+        {
+            collision.GetComponent<KnockbackObject>().ApplyKnockback(transform.position);
+        }
         /*
         else if (collision.gameObject.CompareTag("Ground") && isThrow)
         {

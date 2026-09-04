@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
         InteractionWithOthers();
     }
 
-    #region 플레이어 조작(이동, 공격, 상호작용)  *회전은 카메라에서 조절
+    #region 플레이어 조작(이동(transform), 공격, 상호작용)  *회전은 카메라에서 조절
     /// <summary>
     /// 플레이어 이동 (Rigid 사용)
     /// </summary>
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
         //카메라 시선 방향 확인
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
-
+        //무조건 수평 방향으로만 가도록 보정
         camForward.y = 0f;
         camRight.y = 0f;
 

@@ -74,7 +74,7 @@ public class EnemyController : Poolable
             knockbackDir.y = 0f;        //급격 넉백 방지
             knockbackDir.Normalize();   //정규화
 
-            //피격 방행에 따라 힘 주기
+            //피격 방행 + 위쪽(연출목적)으로 힘 주기
             enemyRigid.AddForce(knockbackDir * 5.0f, ForceMode.Impulse);
             enemyRigid.AddForce(Vector3.up * 6.0f, ForceMode.Impulse);
         }

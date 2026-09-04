@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Floor
   - Cammera
+  - NPC
+  - Item
   layers:
   - Default
   - TransparentFX
