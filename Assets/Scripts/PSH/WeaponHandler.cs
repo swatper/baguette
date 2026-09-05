@@ -35,10 +35,6 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private bool isCooldown = false;
     [Tooltip("빵 재장전 시간")]
     [SerializeField] private float reloadTime;
-
-    [Header("위치 확인용 빵(테스트 후 제거 예정)")]
-    public GameObject breadTMP;
-
     // UI에 전달할 이벤트
     [Tooltip("빵 개수 변경 이벤트")]
     public UnityEvent<int> OnBreadCountChanged = new UnityEvent<int>();
@@ -51,7 +47,6 @@ public class WeaponHandler : MonoBehaviour
     //시작 시점에 빵 갯수 초기화  
     void Start()
     {
-        breadTMP.SetActive(false);
         CreateBread(1);
         //UI 표시 빵 갯수 초기화
         CountEventInvoke();

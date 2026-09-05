@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,5 +22,10 @@ public class VillagerInteractionController : MonoBehaviour
 
         PlayerController player = other.GetOrAddComponent<PlayerController>();
         Managers.Deliver.CompleteDelivery(player, this);
+    }
+
+    public void TakeBaguette()
+    {
+        Managers.Deliver.CheckDelivery(this, 1);
     }
 }

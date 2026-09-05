@@ -65,6 +65,7 @@ public class EnemyController : Poolable
     /// <param name="damage"></param>
     public void EnemyHit(float damage, Vector3? attackerPos = null)
     {
+        Debug.Log("적 피격");
         curHP -= damage;
         //피격 액션 넣기
         if (attackerPos != null)

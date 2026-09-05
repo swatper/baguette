@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5115117256483315518}
   m_Layer: 0
   m_Name: Villager_Body
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 7515186221195492075}
   m_Layer: 0
   m_Name: q
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 887698411733739426}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 8128903447696367624}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 3199575200324931059}
   m_Layer: 0
   m_Name: Trigger
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -487,6 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad00dc2323f2240479af2eac25c66d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VillagerInteractionController
+  weaponHandler: {fileID: 0}
 --- !u!1 &4499199481096977536
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +501,7 @@ GameObject:
   - component: {fileID: 4928109776241283226}
   m_Layer: 0
   m_Name: as
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -590,7 +591,7 @@ GameObject:
   - component: {fileID: 3442658438695620875}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -680,7 +681,7 @@ GameObject:
   - component: {fileID: 3349207270321286570}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -768,7 +769,7 @@ GameObject:
   - component: {fileID: 4231055469384811809}
   m_Layer: 0
   m_Name: Villager
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

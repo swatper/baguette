@@ -62,6 +62,11 @@ public class PlayerController : MonoBehaviour
         pRigid = GetComponent<Rigidbody>();
     }
 
+    void Awake()
+    {
+        Managers.RegisterPlayer(this);
+    }
+
     private void OnEnable()
     {
         InitInputAction();
@@ -374,4 +379,8 @@ public class PlayerController : MonoBehaviour
             isGround = true;
     }
 
+    void OnDestroy()
+    {
+        Managers.UnregisterPlayer();
+    }
 }

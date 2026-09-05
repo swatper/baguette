@@ -6,7 +6,7 @@ public class UI_DeliveryCard : UI_Base
 {
     enum Images
     {
-        House,
+        HouseColor,
     }
 
     enum Texts
@@ -16,19 +16,29 @@ public class UI_DeliveryCard : UI_Base
         Time
     }
 
+    enum Animators
+    {
+        Blink,
+    }
+
     private Define.HouseColor _color;
     private int _reward;
     private int _quantity;
     private float _time;
 
+    private UnityEngine.Animator _animator;
+
     public Define.HouseColor Color { get { return _color; } }
     public int Reward { get { return _reward; } }
-    public int Quantity { get { return _quantity; } }
+    public int Quantity { get { return _quantity; } set => _quantity = value; }
 
     public override void Init()
     {
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Image>(typeof(Images));
+        Bind<UnityEngine.Animator>(typeof(Animators));
+
+        _animator = Get<UnityEngine.Animator>((int)Animators.Blink);
     }
 
     private void Update()
@@ -62,8 +72,17 @@ public class UI_DeliveryCard : UI_Base
 
         GetText((int)Texts.Reward).GetComponent<TextMeshProUGUI>().text = $"{_reward} €";
         GetText((int)Texts.Quantity).GetComponent<TextMeshProUGUI>().text = $"Baguette × {_quantity}";
-        GetImage((int)Images.House).GetComponent<Image>().color = Define.HouseColors.Colors[_color];
+        GetImage((int)Images.HouseColor).GetComponent<Image>().color = Define.HouseColors.Colors[_color];
         SetTime();
+    }
+
+    public void DecreaseQuantity(int amount)
+    {
+        _quantity -= amount;
+        if (_quantity < 0)
+            _quantity = 0;
+        GetText((int)Texts.Quantity).GetComponent<TextMeshProUGUI>().text = $"Baguette × {_quantity}";
+        _animator.Play("Blink");
     }
 
     private void SetTime()

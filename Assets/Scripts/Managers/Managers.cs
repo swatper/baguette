@@ -27,6 +27,8 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene => Instance._sceneManager;
     public static UIManager UI => Instance._uiManager;
 
+    public static PlayerController Player { get; private set; }
+
     public static void EnsureExists()
     {
         if (_instance != null)
@@ -64,9 +66,19 @@ public class Managers : MonoBehaviour
         _poolManager.Init();
     }
 
+    public static void RegisterPlayer(PlayerController playerScript)
+    {
+        Player = playerScript;
+    }
+
     public static void Clear()
     {
         Deliver.Clear();
         Pool.Clear();
+    }
+
+    public static void UnregisterPlayer()
+    {
+        Player = null;
     }
 }

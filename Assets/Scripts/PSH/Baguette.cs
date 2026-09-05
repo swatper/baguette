@@ -6,6 +6,7 @@ public class Baguette : MonoBehaviour
     [Header("빵 컨포넌트")]
     public Animator breadAni;
     public Rigidbody breadRigid;
+    public Collider capCollider;
     [Tooltip("빵 날리기용 빵")]
     public GameObject breadForVisual;
     [Tooltip("빵 설치용 빵")]
@@ -59,15 +60,12 @@ public class Baguette : MonoBehaviour
     /// </summary>
     public void ThrowBaguette()
     {
-        // Change CapsuleCollider
-        CapsuleCollider capsule = gameObject.GetorAddComponent<CapsuleCollider>();
-        capsule.height = 1.15f;
-        capsule.direction = 1;
-        capsule.center = Vector3.zero;
+        //던졌으므로 더이상 근접용 콜라이더 필요 없음
+        capCollider.enabled = false;
 
         SphereCollider sphere = gameObject.GetorAddComponent<SphereCollider>();
         sphere.isTrigger = true;
-        sphere.radius = 0.6f;
+        sphere.radius = 0.55f;
         sphere.center = Vector3.zero;
 
         curDamage = throwDamage;
@@ -83,8 +81,10 @@ public class Baguette : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        Debug.Log("충돌");
         if ((collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Floor")) && isThrow)
         {
+            Debug.Log("부착");
             SetStuck(collision);
         }
         else if (collision.gameObject.CompareTag("Enemy"))
@@ -94,6 +94,7 @@ public class Baguette : MonoBehaviour
             {
                 return;
             }
+            Debug.Log("공격");
 
             EnemyController enemy = collision.GetComponent<EnemyController>();
             if (isThrow)
@@ -112,6 +113,11 @@ public class Baguette : MonoBehaviour
         else if (collision.CompareTag("Item"))
         {
             collision.GetComponent<KnockbackObject>().ApplyKnockback(transform.position);
+        }
+        else if (collision.CompareTag("NPC") && isThrow)
+        {
+            collision.GetComponent<VillagerInteractionController>().TakeBaguette();
+            Destroy(gameObject);
         }
         /*
         else if (collision.gameObject.CompareTag("Ground") && isThrow)
@@ -172,7 +178,6 @@ public class Baguette : MonoBehaviour
         }
 
         breadForStuck.SetActive(true);
-
         Destroy(gameObject);
     }
 

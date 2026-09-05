@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
 public class DeliveryPair
 {
     public UI_DeliveryCard Card;
@@ -90,7 +91,7 @@ public class DeliverManager
         // Reduce bread
         WeaponHandler weaponHandler = player.weaponHandler;
         int curBread = weaponHandler.curBread;
-        DeliveryPair pair = _deliveries.Find(delivery => delivery.Villager == villager);
+        DeliveryPair pair = GetDeliveryPair(villager);
         UI_DeliveryCard deliveryCard = pair.Card;
         Color originHouseColor = pair.OriginHouseColor;
 
@@ -113,6 +114,27 @@ public class DeliverManager
 
         // Earn Money
         Managers.Money.Money = Managers.Money.Money + deliveryCard.Reward;
+    }
+
+    public void CheckDelivery(VillagerInteractionController villager, int amount)
+    {
+        DeliveryPair pair = GetDeliveryPair(villager);
+        UI_DeliveryCard deliveryCard = pair.Card;
+
+        deliveryCard.DecreaseQuantity(amount);
+        if (deliveryCard.Quantity > 0)
+            return;
+
+        OverHeadIconHandler overHeadIconHandler = Managers.Player.GetComponentInChildren<OverHeadIconHandler>();
+        if (!overHeadIconHandler.isEuroShown)
+        {
+            overHeadIconHandler.StartShowEuro();
+        }
+
+        Managers.Player.IncreaseHealth();
+        DestroyDelivery(pair);
+
+        Managers.Money.Money += deliveryCard.Reward;
     }
 
     public void DestroyDelivery(UI_DeliveryCard deliveryCard)
@@ -183,6 +205,18 @@ public class DeliverManager
             );
         }
     }
+
+    /// <summary>
+    /// 배달 카드 찾기
+    /// </summary>
+    /// <param name="villager">주민스크립트</param>
+    /// <returns></returns>
+    DeliveryPair GetDeliveryPair(VillagerInteractionController villager)
+    {
+        return _deliveries.Find(delivery => delivery.Villager == villager);
+    }
+
+
 
     public void Clear()
     {
