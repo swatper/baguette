@@ -30,7 +30,6 @@ public class ShopManager : MonoBehaviour
     [Tooltip("에어컨 가격")]
     [SerializeField] private float airConditionerPrice;
 
-
     [Tooltip("현재 돈 Text")]
     [SerializeField] private TMPro.TextMeshProUGUI curMoneyText;
 
@@ -44,7 +43,7 @@ public class ShopManager : MonoBehaviour
     public StoreStatUpgrade hpData;
     [SerializeField] private Stat curHp;
     [SerializeField] private int healthLevel = 1;
-    [SerializeField] private float healthPrice = 5.00f;
+    [SerializeField] private float healthPrice;
     [Tooltip("최대 체력 강화 가격 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI healthPriceText;
     [Tooltip("현재 체력 수치 Text")]
@@ -59,7 +58,7 @@ public class ShopManager : MonoBehaviour
     public StoreStatUpgrade breadData;
     [SerializeField] private Stat curBread;
     [SerializeField] private int breadLevel = 1;
-    [SerializeField] private float breadPrice = 5.00f;
+    [SerializeField] private float breadPrice;
     [Tooltip("빵 소지 최대치 강화 가격 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI breadPriceText;
     [Tooltip("현재 빵 소지 최대치 수치 Text")]
@@ -73,9 +72,9 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private Stat curSpeed;
     [SerializeField] private Button speedButton;
     [Tooltip("이동속도 강화 레벨")]
-    [SerializeField] private int speedLevel = 1;
+    [SerializeField] private int speedLevel = 0;
     [Tooltip("이동속도 강화 가격")]
-    [SerializeField] private float speedPrice = 22.50f;
+    [SerializeField] private float speedPrice;
     [Tooltip("이동속도 강화 가격 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI speedPriceText;
     [Tooltip("현재 이동속도 수치 Text")]
@@ -111,19 +110,8 @@ public class ShopManager : MonoBehaviour
     void Start()
     {
         GetCurrentValues();
-        //InitValueText();
         SetValueText();
         ButtonInitiate();
-        //초기화
-        SetHealthValue();
-        SetBreadValue();
-        SetSpeedValue();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     #region 값 가져오고 초기 세팅
@@ -328,7 +316,7 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void SetSpeedValue()
     {
-        if (speedLevel > speedData.upgradeTable.Count)
+        if (speedLevel > (speedData.upgradeTable.Count - 1))
         {
             SetSpeedValueText();
             ButtonInitiate();
