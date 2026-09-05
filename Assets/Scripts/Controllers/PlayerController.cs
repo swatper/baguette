@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
     #region 플레이어 상태값 by.Jeehoon
     [Header("플레이어 상태")]
+    public string PlayerName { get; set; }
+    public TextMesh nameText;
     public bool isDead = false;
     public bool isGround = true;
     [Tooltip("UI 읽고 있는 상태")]
@@ -259,6 +261,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region 플레이어 체력 변동 & 사망 by.Jaehoon
+    public void SetPlayerName(string newName)
+    {
+        nameText.text = newName;
+    }
+
     /// <summary>
     /// 현재 체력 변동 이벤트를 Invoke합니다.
     /// </summary>

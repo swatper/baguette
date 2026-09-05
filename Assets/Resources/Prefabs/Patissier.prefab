@@ -370,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4690759066061144448}
-  - component: {fileID: 1053175832782658321}
+  - component: {fileID: 2041452327689433871}
   m_Layer: 0
   m_Name: KeyHint
   m_TagString: Untagged
@@ -394,7 +394,7 @@ Transform:
   - {fileID: 8646123515621287033}
   m_Father: {fileID: 216359990601032180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1053175832782658321
+--- !u!114 &2041452327689433871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,10 +403,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4130918357861667212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ece2132391c5bba4ca2b0c686a3af0dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a52bd51b5bce02449c9298a52c01736, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Patissier
-  keyhintUI: {fileID: 4130918357861667212}
+  m_EditorClassIdentifier: Assembly-CSharp::Billboard
+  text: {fileID: 4690759066061144448}
   target: {fileID: 0}
 --- !u!1 &4860847406908679611
 GameObject:
@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Patissier
   keyhintUI: {fileID: 4130918357861667212}
-  target: {fileID: 0}
+  board: {fileID: 0}
 --- !u!1 &6637850023012764119
 GameObject:
   m_ObjectHideFlags: 0

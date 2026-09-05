@@ -5,23 +5,12 @@ public class Patissier : MonoBehaviour
     [Header("빵집 관련 UI")]
     [Tooltip("상호작용 키 UI (키 힌트 UI)")]
     public GameObject keyhintUI;
-
-    [Tooltip("키 힌트가 바라볼 대상(카메라)")]
-    [SerializeField] Transform target;
+    [Header("카메라 추적 스크립트")]
+    [SerializeField] Billboard board;
 
     void Awake()
     {
         keyhintUI.SetActive(false);
-    }
-
-    /// <summary>
-    /// 키 힌트 표시는 "카메라"를 바라봄 
-    /// </summary>
-    void LateUpdate()
-    {
-        if (target == null)
-            return;
-        keyhintUI.transform.rotation = target.rotation;
     }
 
     //키 힌트 보여주기
@@ -31,7 +20,7 @@ public class Patissier : MonoBehaviour
         if (player == null || !other.transform.root.CompareTag("Player"))
             return;
         keyhintUI.SetActive(true);
-        target = Camera.main.transform;
+        board.SetTarget(Camera.main.transform);
         player.SetBreadShopInteration(this);
     }
 
@@ -42,7 +31,7 @@ public class Patissier : MonoBehaviour
         if (player == null || !other.transform.root.CompareTag("Player"))
             return;
 
-        target = null;
+        board.ResetTarget();
         keyhintUI.SetActive(false);
         player.RemoveBreadShopInteration();
     }

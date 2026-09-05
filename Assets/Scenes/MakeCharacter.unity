@@ -404,20 +404,47 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
     m_Priority: 0
+  interactionInput:
+    m_Name: Interaction Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b9a6a4e1-98dd-4508-b7b7-c5e488259196
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
+  cancleInput:
+    m_Name: Cancle Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e0e507e5-1b90-41fe-97c7-b6804a6471ac
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
   weaponHandlerAni: {fileID: 893483875}
   isThrowReady: 0
   rightClickTime: 0
   aimTime: 1.5
   movePos: {x: 0, y: 0}
   jumpHeight: 2
+  nameText: {fileID: 0}
   isDead: 0
   isGround: 1
+  isReadMode: 0
   walkSpeed: 10
   maxHealth: 5
   currentHealth: 5
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+  PlayerDied:
+    m_PersistentCalls:
+      m_Calls: []
+  shop: {fileID: 0}
+  bread: {fileID: 0}
 --- !u!54 &289189713
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -534,7 +561,7 @@ Transform:
   m_GameObject: {fileID: 289189711}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.43, y: 0.997, z: 21.01}
+  m_LocalPosition: {x: 9.43, y: 0.997, z: 12.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -795,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192825985473028765, guid: 0c8de91f24b68ee4796e1fc5906cba8c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4515814471483075604, guid: 0c8de91f24b68ee4796e1fc5906cba8c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -944,14 +971,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312841d1c6231aa4b971540e3978ba54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponHandler
+  scope: {fileID: 0}
   camController: {fileID: 0}
   weaponHandlerAni: {fileID: 893483875}
+  aimingProgressbar: {fileID: 0}
+  fillColor: {fileID: 0}
   BreadPrefs: {fileID: 881934321}
   onHandBread: {fileID: 0}
   MaxBread: 5
   curBread: 0
   fireAngleTransform: {fileID: 0}
   throwPathRaycast: {fileID: 0}
+  aimingKeepTime: 0
+  curKeepTime: 0
   throwCooldownTime: 0
   isCooldown: 0
   reloadTime: 1
@@ -993,7 +1025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CamController
   scopeTransform: {fileID: 0}
   camRotateSpeed: 30
-  adsSpeed: 15
+  zoomTime: 15
   mouseX: 0
   mouseY: 0
   player: {fileID: 0}
@@ -1531,7 +1563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1740842381
 Transform:
   m_ObjectHideFlags: 0
@@ -1926,7 +1958,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8638486881805310921, guid: 06a7872c01341564c9cc2e2b6c8cc4cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 06a7872c01341564c9cc2e2b6c8cc4cb, type: 3}
 --- !u!1001 &8657556389604802145
 PrefabInstance:
@@ -1983,7 +2018,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3869465869290020351, guid: 5ba423f9508536a498ef4f6a3f347890, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 5ba423f9508536a498ef4f6a3f347890, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

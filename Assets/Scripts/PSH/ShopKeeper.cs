@@ -11,8 +11,8 @@ public class ShopKeeper : MonoBehaviour
     [Tooltip("상호작용 키 UI (키 힌트 UI)")]
     public GameObject keyhintUI;
 
-    [Tooltip("키 힌트가 바라볼 대상(카메라)")]
-    [SerializeField] Transform target;
+    [Header("카메라 추적 스크립트")]
+    [SerializeField] Billboard board;
     [SerializeField] PlayerController player;
 
     void Awake()
@@ -25,9 +25,6 @@ public class ShopKeeper : MonoBehaviour
     /// </summary>
     void LateUpdate()
     {
-        if (target == null)
-            return;
-
         /*
         //플레이어 방향에 따라 키 힌트 회전
         Vector3 direction = target.position - keyhintUI.transform.position;
@@ -38,8 +35,6 @@ public class ShopKeeper : MonoBehaviour
             keyhintUI.transform.rotation = Quaternion.LookRotation(-direction);
         }
         */
-
-        keyhintUI.transform.rotation = target.rotation;
     }
 
     //키 힌트 보여주기
@@ -48,7 +43,7 @@ public class ShopKeeper : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
             return;
 
-        target = Camera.main.transform;
+        board.SetTarget(Camera.main.transform);
         keyhintUI.SetActive(true);
         player = other.GetComponent<PlayerController>();
         player.SetShopInteration(this);
@@ -59,7 +54,7 @@ public class ShopKeeper : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player"))
             return;
-        target = null;
+        board.ResetTarget();
         keyhintUI.SetActive(false);
         player.RemoveShopInteration();
         player = null;
