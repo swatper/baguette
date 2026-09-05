@@ -32,15 +32,8 @@ public class BreadCounter : MonoBehaviour
 
         JHTmpPlayerWeaponHandler.OnBreadCountChanged.AddListener(UpdateBreadCounter);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
-    /// 빵 개수 업데이트
+    /// 빵 개수 업데이트 (WeaponHandler 로부터 받은 신호)
     /// </summary>
     /// <param name="currentBread">현재 빵 개수</param>
     void UpdateBreadCounter(int currentBread)
@@ -49,11 +42,23 @@ public class BreadCounter : MonoBehaviour
         breadCountText.text = "Bread: " + currentBread.ToString() + " / " + maxBread.ToString();
     }
 
+    public void ReserBreadCountForce()
+    {
+        maxBread = JHTmpPlayerWeaponHandler.GetMaxBread();
+        currentBread = JHTmpPlayerWeaponHandler.GetCurrentBread();
+        breadCountText.text = "Bread: " + currentBread.ToString() + " / " + maxBread.ToString();
+    }
+
+    /// <summary>
+    /// 플레이어 UI의 MAXbread 업데이트
+    /// </summary>
+    /// <param name="newMaxBread"></param>
     public void SetMaxBread(int newMaxBread)
     {
         maxBread = newMaxBread;
         UpdateBreadCounter(currentBread);
     }
+
 
     public int GetMaxBread()
     {

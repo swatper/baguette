@@ -45,7 +45,7 @@ public class WeaponHandler : MonoBehaviour
 
     void Awake()
     {
-        SetBread(MaxBread);
+        ResetSetBread(MaxBread);
     }
 
     //시작 시점에 빵 갯수 초기화  
@@ -78,6 +78,20 @@ public class WeaponHandler : MonoBehaviour
         CountEventInvoke();
     }
 
+    public void ResetSetBread(int count)
+    {
+        curBread = count;
+        if (curBread == 0)
+            camController.CameraAim(false);
+        CountEventInvoke();
+    }
+
+    public void AddCurBread(int amount)
+    {
+        curBread += amount;
+        CountEventInvoke();
+    }
+
     /// <summary>
     /// 빵 생성 (초기화 및 애니메이션에서 호출)
     /// </summary>
@@ -100,14 +114,6 @@ public class WeaponHandler : MonoBehaviour
         onHandBread.transform.localPosition = new Vector3(0.62f, 0.2f, 0.7f);
         onHandBread.transform.localRotation = Quaternion.identity;
         onHandBread.transform.localScale = Vector3.one;
-    }
-
-    public void SetBread(int count)
-    {
-        curBread = count;
-        if (curBread == 0)
-            camController.CameraAim(false);
-        CountEventInvoke();
     }
 
     #endregion

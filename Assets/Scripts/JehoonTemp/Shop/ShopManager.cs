@@ -293,7 +293,7 @@ public class ShopManager : MonoBehaviour
         Debug.Log("Current HP: " + player.GetComponent<PlayerController>().GetCurrentHealth());
     }
     /// <summary>
-    /// 빵 소지 최대치 레벨에 따른 능력치 및 가격 세팅
+    /// 빵 소지 최대치 레벨에 따른 능력치 및 가격 세팅 (상점용)
     /// </summary>
     public void SetBreadValue()
     {
@@ -308,7 +308,7 @@ public class ShopManager : MonoBehaviour
         //플레이어 빵 최대 갯수 증가
         wHandler.UpgradeMaxBread(2);
 
-        //UI에 표시 글 수정
+        //상점 UI에 표시 글 수정
         Managers.Money.Money -= curBread.price;
         breadLevel += 1;
         curBread = breadData.upgradeTable[breadLevel];

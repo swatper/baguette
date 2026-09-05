@@ -53,8 +53,8 @@ public class HealthCounter : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // 새로운 체력 UI 생성
-        for (int i = 0; i < maxPlayerHealth; i++)
+        // 새로운 체력 UI 생성 (최대 10개 표시)
+        for (int i = 0; i < (maxPlayerHealth < 10 ? maxPlayerHealth : 10); i++)
         {
             if (i < playerHealth)
             {

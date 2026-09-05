@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public InputAction jumpInput;
     [Tooltip("상호작용 키")]
     public InputAction interactionInput;
+    [Tooltip("공격 취소")]
+    public InputAction cancleInput;
     [Tooltip("공격 애니메이션(웨폰 헨들러)")]
     public Animator weaponHandlerAni;
     public bool isThrowReady = false;
@@ -216,6 +218,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CancleZoom()
+    {
+        if (cancleInput.triggered)
+        {
+            if (false)
+                return;
+
+        }
+    }
+
 
     #region 가게 상호 작용
     /// <summary>
@@ -335,6 +347,16 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerSpeed(float newSpeed)
     {
         walkSpeed = newSpeed;
+    }
+
+    public void UpgradeBreadBag(int max)
+    {
+        weaponHandler.UpgradeMaxBread(max);
+    }
+
+    public void AddCurBread(int amount)
+    {
+        weaponHandler.AddCurBread(amount);
     }
 
     #endregion

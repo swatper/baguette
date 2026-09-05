@@ -4,15 +4,20 @@ public class MinimapManager : MonoBehaviour
 {
     // 정적 싱글톤 인스턴스
     public static MinimapManager Instance { get; private set; }
+    [SerializeField] private Camera minimapCamera;
 
     [Header("미니맵 요소")]
     [SerializeField] private GameObject minimapUI;          // 미니맵 전체 루트 오브젝트 (켜고 끄기용)
     [SerializeField] private RectTransform minimapRect;     // 렌더 텍스처를 보여주는 RawImage의 RectTransform
     [SerializeField] private RectTransform playerMark;
+    [SerializeField] private RectTransform macaroonMark;
 
-    [Header("플레이어 및 카메라")]
+    [Header("추척 대상")]
+    [Tooltip("플레이어")]
     [SerializeField] private Transform playerTransform;
-    [SerializeField] private Camera minimapCamera;
+    [Tooltip("마카롱")]
+    [SerializeField] private Transform macaTransform;
+
     private void Awake()
     {
         // 싱글톤 중복 방지 및 인스턴스 초기화
@@ -32,20 +37,28 @@ public class MinimapManager : MonoBehaviour
 
     private void UpdatePlayerIcon()
     {
-        //월드 좌표 -> 뷰포트 좌표 변환
-        Vector3 viewPos = minimapCamera.WorldToViewportPoint(playerTransform.position);
+        //마크 배치
+        if (macaTransform != null)
+            macaroonMark.anchoredPosition = TranslateWorldPosToUI(macaTransform);
+        else
+            macaroonMark.gameObject.SetActive(false);
 
+        playerMark.anchoredPosition = TranslateWorldPosToUI(playerTransform);
+        //마크 회전
+        playerMark.localEulerAngles = new Vector3(0f, 0f, -playerTransform.eulerAngles.y);
+    }
+
+    Vector2 TranslateWorldPosToUI(Transform target)
+    {
+        //월드 좌표 -> 뷰포트 좌표 변환
+        Vector3 viewPos = minimapCamera.WorldToViewportPoint(target.position);
         //미니맵 Rect 사이즈 기준으로 위치 계산 (Anchor/Pivot이 0.5, 0.5 기준)
         Vector2 size = minimapRect.rect.size;
-        Vector2 localPos = new Vector2(
+
+        return new Vector2(
             (viewPos.x - 0.5f) * size.x,
             (viewPos.y - 0.5f) * size.y
         );
-
-        //마크 배치
-        playerMark.anchoredPosition = localPos;
-        //마크 회전
-        playerMark.localEulerAngles = new Vector3(0f, 0f, -playerTransform.eulerAngles.y);
     }
 
     /// <summary>
