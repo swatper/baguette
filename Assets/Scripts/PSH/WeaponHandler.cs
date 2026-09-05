@@ -27,7 +27,7 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private BreadThrowPathRaycast throwPathRaycast;
     [Tooltip("줌 유지 시간")]
     Coroutine aimingKeepTimeCoroutine;
-    [SerializeField] private float aimingKeepTime;
+    [SerializeField] private float reqAimingKeepTime;
     [SerializeField] private float curKeepTime;
     [Tooltip("쿨타임")]
     [SerializeField] private float throwCooldownTime;
@@ -135,7 +135,7 @@ public class WeaponHandler : MonoBehaviour
             aimingKeepTimeCoroutine = null;
         }
 
-        if (isCooldown || (curKeepTime < aimingKeepTime))
+        if (isCooldown || (curKeepTime < reqAimingKeepTime))
         {
             camController.CameraAim(false);
             EndThrowReady();
@@ -261,16 +261,16 @@ public class WeaponHandler : MonoBehaviour
     IEnumerator CheckAimingTime()
     {
         //재장전 시간 동안 조준 상태 유지
-        while (curKeepTime < aimingKeepTime)
+        while (curKeepTime < reqAimingKeepTime)
         {
             curKeepTime += Time.deltaTime;
-            aimingProgressbar.value = Mathf.Clamp01(curKeepTime / aimingKeepTime);
+            aimingProgressbar.value = Mathf.Clamp01(curKeepTime / reqAimingKeepTime);
             //카메라 위치 보정
             if (curKeepTime > 0.15)
                 camController.TranslateCametaFoce(scope.transform.position);
             yield return null;
         }
-        curKeepTime = aimingKeepTime;
+        curKeepTime = reqAimingKeepTime;
         aimingProgressbar.value = 1.0f;
         fillColor.color = Color.green;
     }

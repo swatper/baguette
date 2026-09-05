@@ -21581,12 +21581,11 @@ MonoBehaviour:
   curBread: 0
   fireAngleTransform: {fileID: 1303219960}
   throwPathRaycast: {fileID: 1843347792}
-  aimingKeepTime: 0.7
+  reqAimingKeepTime: 0.7
   curKeepTime: 0
   throwCooldownTime: 0.1
   isCooldown: 0
   reloadTime: 1
-  breadTMP: {fileID: 0}
   OnBreadCountChanged:
     m_PersistentCalls:
       m_Calls: []
