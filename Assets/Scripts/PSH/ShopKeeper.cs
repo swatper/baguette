@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ShopKeeper : MonoBehaviour
@@ -10,8 +11,9 @@ public class ShopKeeper : MonoBehaviour
     [Tooltip("상호작용 키 UI (키 힌트 UI)")]
     public GameObject keyhintUI;
 
-    [Tooltip("키 힌트가 바라볼 대상")]
+    [Tooltip("키 힌트가 바라볼 대상(카메라)")]
     [SerializeField] Transform target;
+    [SerializeField] PlayerController player;
 
     void Awake()
     {
@@ -48,7 +50,8 @@ public class ShopKeeper : MonoBehaviour
 
         target = Camera.main.transform;
         keyhintUI.SetActive(true);
-        other.GetComponent<PlayerController>().SetShopInteration(this);
+        player = other.GetComponent<PlayerController>();
+        player.SetShopInteration(this);
     }
 
     //키 힌트 숨기기
@@ -58,13 +61,14 @@ public class ShopKeeper : MonoBehaviour
             return;
         target = null;
         keyhintUI.SetActive(false);
-        other.GetComponent<PlayerController>().RemoveShopInteration();
+        player.RemoveShopInteration();
+        player = null;
     }
 
     public void ShowStore()
     {
         shopOnOFF.StateChange();
         storeUI.SetActive(true);
+        player.SetPlayerReadMode(true);
     }
-
 }

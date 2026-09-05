@@ -67,7 +67,7 @@ public class Baguette : MonoBehaviour
 
         SphereCollider sphere = gameObject.GetorAddComponent<SphereCollider>();
         sphere.isTrigger = true;
-        sphere.radius = 0.75f;
+        sphere.radius = 0.6f;
         sphere.center = Vector3.zero;
 
         curDamage = throwDamage;

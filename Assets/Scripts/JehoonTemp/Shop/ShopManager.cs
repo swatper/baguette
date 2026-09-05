@@ -415,6 +415,7 @@ public class ShopManager : MonoBehaviour
     private void OnDisable()
     {
         Time.timeScale = 1f;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().SetPlayerReadMode(false);
     }
     #endregion
 }
