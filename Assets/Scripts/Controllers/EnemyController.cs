@@ -8,6 +8,7 @@ public class EnemyController : Poolable
     [SerializeField] private PlayerController player;
     [Header("적 컨포넌트")]
     [SerializeField] Rigidbody enemyRigid;
+    [SerializeField] Animator enemyAni;
     [Tooltip("적 상태")]
     [SerializeField] float maxHP;
     [SerializeField] float curHP;
@@ -68,7 +69,6 @@ public class EnemyController : Poolable
         //피격 액션 넣기
         if (attackerPos != null)
         {
-
             //피격 방향 계산하기
             Vector3 knockbackDir = transform.position - attackerPos.Value; //벡터 계산
             knockbackDir.y = 0f;        //급격 넉백 방지
@@ -77,6 +77,8 @@ public class EnemyController : Poolable
             //피격 방행 + 위쪽(연출목적)으로 힘 주기
             enemyRigid.AddForce(knockbackDir * 5.0f, ForceMode.Impulse);
             enemyRigid.AddForce(Vector3.up * 6.0f, ForceMode.Impulse);
+
+            enemyAni.Play("Hit");
         }
 
         //사망 처리 요청
