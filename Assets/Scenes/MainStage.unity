@@ -17786,8 +17786,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthCounter
   player: {fileID: 349606018}
-  playerHealth: 5
-  maxPlayerHealth: 5
+  playerHealth: 0
+  maxPlayerHealth: 0
   playerName: Player
   HealthPrefab: {fileID: 1461833107290429299, guid: b632f43fc6d7a12448ad8eb5f6d9a352, type: 3}
   LostHealthPrefab: {fileID: 5975976662181047576, guid: f7cfbb32dada5c344a0c53c642e23b80, type: 3}

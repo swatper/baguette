@@ -42,7 +42,7 @@ public class BreadCounter : MonoBehaviour
         breadCountText.text = "Bread: " + currentBread.ToString() + " / " + maxBread.ToString();
     }
 
-    public void ReserBreadCountForce()
+    public void ResetBreadCountForce()
     {
         maxBread = JHTmpPlayerWeaponHandler.GetMaxBread();
         currentBread = JHTmpPlayerWeaponHandler.GetCurrentBread();

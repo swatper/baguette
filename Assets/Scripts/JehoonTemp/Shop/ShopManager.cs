@@ -293,8 +293,6 @@ public class ShopManager : MonoBehaviour
             Debug.Log("Current Bread: " + breadCounter.GetCurrentBread());
             return;
         }
-        //플레이어 빵 최대 갯수 증가
-        wHandler.UpgradeMaxBread(2);
 
         //상점 UI에 표시 글 수정
         Managers.Money.Money -= curBread.price;

@@ -19,7 +19,7 @@ public class Macaroon : KnockbackObject
         Managers.Money.Money = 5599.9f; //에어컨 못 사지롱~
 
         shop.SetBreadValueText();
-        breadUI.ReserBreadCountForce();
+        breadUI.ResetBreadCountForce();
 
         Destroy(gameObject);
     }

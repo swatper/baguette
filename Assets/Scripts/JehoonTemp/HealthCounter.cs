@@ -24,17 +24,8 @@ public class HealthCounter : MonoBehaviour
     void Start()
     {
         player = GameObject.Find(playerName);
-        maxPlayerHealth = player.GetComponent<PlayerController>().GetMaxHealth();
-        playerHealth = maxPlayerHealth;
-        UpdateHealthCounter(playerHealth);
-
+        UpdateHealthCounter(player.GetComponent<PlayerController>().GetMaxHealth());
         player.GetComponent<PlayerController>().OnHealthChanged.AddListener(UpdateHealthCounter);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     /// <summary>
@@ -44,9 +35,17 @@ public class HealthCounter : MonoBehaviour
     public void UpdateHealthCounter(int currentHealth)
     {
         maxPlayerHealth = player.GetComponent<PlayerController>().GetMaxHealth();
-
         playerHealth = currentHealth;
 
+        UpdateHealthBox();
+    }
+
+    /// <summary>
+    /// 체력 표시 칸 업데이트
+    /// </summary>
+
+    void UpdateHealthBox()
+    {
         // 기존 체력 UI 제거
         foreach (Transform child in transform)
         {
@@ -54,7 +53,7 @@ public class HealthCounter : MonoBehaviour
         }
 
         // 새로운 체력 UI 생성 (최대 10개 표시)
-        for (int i = 0; i < (maxPlayerHealth < 10 ? maxPlayerHealth : 10); i++)
+        for (int i = 0; i < (maxPlayerHealth < 15 ? maxPlayerHealth : 15); i++)
         {
             if (i < playerHealth)
             {
