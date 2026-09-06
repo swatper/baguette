@@ -11,12 +11,15 @@ public class MinimapManager : MonoBehaviour
     [SerializeField] private RectTransform minimapRect;     // 렌더 텍스처를 보여주는 RawImage의 RectTransform
     [SerializeField] private RectTransform playerMark;
     [SerializeField] private RectTransform macaroonMark;
+    [SerializeField] private RectTransform croissanMark;
 
     [Header("추척 대상")]
     [Tooltip("플레이어")]
     [SerializeField] private Transform playerTransform;
     [Tooltip("마카롱")]
     [SerializeField] private Transform macaTransform;
+    [Tooltip("크로아상")]
+    [SerializeField] private Transform croTransform;
 
     private void Awake()
     {
@@ -38,14 +41,28 @@ public class MinimapManager : MonoBehaviour
     private void UpdatePlayerIcon()
     {
         //마크 배치
-        if (macaTransform != null)
-            macaroonMark.anchoredPosition = TranslateWorldPosToUI(macaTransform);
-        else
-            macaroonMark.gameObject.SetActive(false);
+        UpdateMarkPosition(macaroonMark, macaTransform);
+        UpdateMarkPosition(croissanMark, croTransform);
+        UpdateMarkPosition(playerMark, playerTransform);
 
-        playerMark.anchoredPosition = TranslateWorldPosToUI(playerTransform);
-        //마크 회전
+        //플에이어와 화전 방향 연동
         playerMark.localEulerAngles = new Vector3(0f, 0f, -playerTransform.eulerAngles.y);
+    }
+
+
+    /// <summary>
+    /// 원드에 있는 오브젝트와 UI 마크와 위치 연동
+    /// </summary>
+    /// <param name="mark">마크 UI</param>
+    /// <param name="target">월드 오브젝트</param>
+    void UpdateMarkPosition(RectTransform mark, Transform target)
+    {
+        if (target == null)
+        {
+            mark.gameObject.SetActive(false);
+            return;
+        }
+        mark.anchoredPosition = TranslateWorldPosToUI(target);
     }
 
     Vector2 TranslateWorldPosToUI(Transform target)

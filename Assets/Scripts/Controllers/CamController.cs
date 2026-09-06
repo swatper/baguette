@@ -30,8 +30,6 @@ public class CamController : MonoBehaviour
         camRotateSpeed = 30f;
         //외부 게임오브젝트들 설정
         player = GameObject.Find("PlayerTemp");
-        //weapon = player.transform.Find("WeaponHandler").transform;
-        //scopeTransform = player.transform.Find("FirstPersonCamPos").transform;
     }
 
     public void FreezeCam()

@@ -153,6 +153,11 @@ public class PlayerController : MonoBehaviour
 
         if (jumpInput.triggered)
         {
+            //경사진 곳에서 슈퍼점프(?) 방지용
+            Vector3 vel = pRigid.linearVelocity;//현재 rigid의 벡터(방향 + 크기)
+            vel.y = 0f;
+            pRigid.linearVelocity = vel;
+
             pRigid.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
             isGround = false;
         }

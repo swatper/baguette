@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1612873478765492355}
   m_Layer: 0
   m_Name: Baguette
-  m_TagString: Untagged
+  m_TagString: Baguette
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,6 @@ MonoBehaviour:
   breadRigid: {fileID: 1612873478765492355}
   capCollider: {fileID: 2699469696776315896}
   breadForVisual: {fileID: 4991467971936218174}
-  childForCollider: {fileID: 0}
   breadForStuck: {fileID: 6831884730963072871}
   breadForStuckVisual: {fileID: 9126883712371449115}
   meleeDamage: 1
