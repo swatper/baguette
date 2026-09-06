@@ -190,9 +190,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8964984217056164549}
   - component: {fileID: 2691379823536065899}
+  - component: {fileID: 3591029163217740803}
   - component: {fileID: 1003796752489446201}
   - component: {fileID: 1368553192137943745}
-  - component: {fileID: 3591029163217740803}
   m_Layer: 0
   m_Name: Croissan_Flying
   m_TagString: Untagged
@@ -237,8 +237,35 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.197032, y: 1, z: 3.215712}
-  m_Center: {x: 0.030826584, y: -5.1293774e-17, z: 0.20501062}
+  m_Size: {x: 2.5, y: 1.8, z: 2.7}
+  m_Center: {x: 0.17, y: 0.4, z: 0.7}
+--- !u!54 &3591029163217740803
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868971720489448146}
+  serializedVersion: 5
+  m_Mass: 3
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!96 &1003796752489446201
 TrailRenderer:
   serializedVersion: 4
@@ -379,38 +406,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1b932b19e020434f80c916f6fc0dbb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingCroissan
+  collider: {fileID: 2691379823536065899}
   rigid: {fileID: 3591029163217740803}
-  playerTrans: {fileID: 0}
+  playerTrans: {fileID: 8964984217056164549}
   radius: 30
   speed: 35
   height: 15
---- !u!54 &3591029163217740803
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3868971720489448146}
-  serializedVersion: 5
-  m_Mass: 3
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &3940389496686202597
 GameObject:
   m_ObjectHideFlags: 0

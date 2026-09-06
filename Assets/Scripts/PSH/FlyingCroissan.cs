@@ -1,9 +1,11 @@
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlyingCroissan : MonoBehaviour
 {
 
+    [SerializeField] Collider collider;
     [SerializeField] Rigidbody rigid;
     [Header("플레이어")]
     [SerializeField] Transform playerTrans;
@@ -54,6 +56,8 @@ public class FlyingCroissan : MonoBehaviour
         if (other.CompareTag("Baguette")) // 바게트 태그 체크
         {
             isShootDown = true;
+            collider.isTrigger = false;
+            rigid.isKinematic = false;
             rigid.useGravity = true;
         }
     }
