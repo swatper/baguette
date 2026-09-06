@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
         // 우클릭 해제 시 카메라 줌아웃
         else if (Input.GetMouseButtonUp(1))
         {
-            weaponHandler.ThrowBread();
+            weaponHandler.ThrowWeapon();
             rightClickTime = 0f;
             isThrowReady = false;
         }

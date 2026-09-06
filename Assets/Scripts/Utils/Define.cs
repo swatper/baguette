@@ -24,6 +24,12 @@ public class Define
 
     }
 
+    public enum WeaponType
+    {
+        Baguette,
+        Croissan,
+    }
+
     public static class HouseColors
     {
         public static readonly Dictionary<HouseColor, Color32> Colors = new()

@@ -13,6 +13,7 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private Image fillColor;
 
     [Header("무기 설정")]
+    public Define.WeaponType wType;
     [Tooltip("무기 프리팹(바게트 빵)")]
     public Baguette BreadPrefs;
     public Baguette onHandBread;
@@ -41,6 +42,7 @@ public class WeaponHandler : MonoBehaviour
 
     void Awake()
     {
+        wType = Define.WeaponType.Baguette;
         ResetSetBread(MaxBread);
     }
 
@@ -125,9 +127,17 @@ public class WeaponHandler : MonoBehaviour
     public void EndMeleeAttack() => onHandBread.EndSwingBaguette();
 
     /// <summary>
-    /// 빵 던지기
+    /// 무기(빵) 던지기
     /// </summary>
-    public void ThrowBread()
+    public void ThrowWeapon()
+    {
+        if (wType == Define.WeaponType.Baguette)
+            ThrowBaguette();
+        else if (wType == Define.WeaponType.Croissan)
+            ThrowCroissan();
+    }
+
+    void ThrowBaguette()
     {
         if (aimingKeepTimeCoroutine != null)
         {
@@ -165,6 +175,10 @@ public class WeaponHandler : MonoBehaviour
         }
     }
 
+    void ThrowCroissan()
+    {
+
+    }
     /// <summary>
     /// 던지기 쿨타임 여부 반환
     /// </summary>
