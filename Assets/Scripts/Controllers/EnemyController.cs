@@ -53,7 +53,7 @@ public class EnemyController : Poolable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && curHP > 0)
         {
             // StopCoroutine(StillTriggeredCoroutine());
             StopAllCoroutines();
@@ -75,8 +75,8 @@ public class EnemyController : Poolable
             knockbackDir.Normalize();   //정규화
 
             //피격 방행 + 위쪽(연출목적)으로 힘 주기
-            enemyRigid.AddForce(knockbackDir * 5.0f, ForceMode.Impulse);
-            enemyRigid.AddForce(Vector3.up * 6.0f, ForceMode.Impulse);
+            enemyRigid.AddForce(knockbackDir * 10.0f, ForceMode.Impulse);
+            enemyRigid.AddForce(Vector3.up * 12.0f, ForceMode.Impulse);
 
             enemyAni.Play("Hit");
         }

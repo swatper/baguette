@@ -311,9 +311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf6831ed27acf94b933c429a9c6e301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowingCroissan
+  wHandler: {fileID: 0}
   rigid: {fileID: 3591029163217740803}
   wAni: {fileID: 6248889808313157862}
-  startPos: {x: 0, y: 0, z: 0}
   center: {x: 0, y: 0, z: 0}
   radius: 0
   speed: 0
@@ -665,7 +665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3113831233576460832}
-  - component: {fileID: 4503056533301530729}
+  - component: {fileID: 6646811065395867469}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -681,15 +681,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8090470130910741658}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.014741357, z: -0.017314734}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8964984217056164549}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4503056533301530729
-CapsuleCollider:
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!135 &6646811065395867469
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -706,10 +706,8 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.77
-  m_Height: 1
-  m_Direction: 1
+  serializedVersion: 3
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8117232372344617957
 GameObject:

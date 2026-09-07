@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.UI;
-using System;
-using System.Data.Common;
 
 public class WeaponHandler : MonoBehaviour
 {
@@ -31,8 +29,10 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private BreadThrowPathRaycast throwPathRaycast;
     [Tooltip("줌 유지 시간")]
     Coroutine aimingKeepTimeCoroutine;
-    [SerializeField] private float reqAimingKeepTime;
-    [SerializeField] private float curKeepTime;
+    [SerializeField] private float[] reqAimingKeepTime;
+    [SerializeField] private float curReqAimingKeepTime;
+    [SerializeField] private float curKeepingTime;
+
     [Tooltip("쿨타임")]
     [SerializeField] private float throwCooldownTime;
     [Tooltip("쿨타임 여부")]
@@ -54,6 +54,7 @@ public class WeaponHandler : MonoBehaviour
     //시작 시점에 빵 갯수 초기화  
     void Start()
     {
+        curReqAimingKeepTime = reqAimingKeepTime[0];
         CreateBaguette(1);
         //UI 표시 빵 갯수 초기화
         CountEventInvoke();
@@ -105,7 +106,6 @@ public class WeaponHandler : MonoBehaviour
         {
             return;
         }
-
         if (type == 0)
             curBread--;
 
@@ -133,6 +133,7 @@ public class WeaponHandler : MonoBehaviour
 
         wType = type;
         bool isBaguette = wType == Define.WeaponType.Baguette;
+        curReqAimingKeepTime = isBaguette ? reqAimingKeepTime[0] : reqAimingKeepTime[1];
         onHandBaguette.gameObject.SetActive(isBaguette);
         OnHandCroissan.SetActive(!isBaguette);
     }
@@ -144,12 +145,18 @@ public class WeaponHandler : MonoBehaviour
     #endregion
 
     #region 빵 공격 관련
-
+    public void PlayAttackMotion()
+    {
+        if (wType == Define.WeaponType.Croissan)
+            return;
+        weaponHandlerAni.Play("SwingDiagonal");
+    }
     /// <summary>
     /// 애니메이션에서 호출할 근접 시작 알림
     /// </summary>
     public void StartMeleeAttack()
     {
+
         if (wType == Define.WeaponType.Baguette)
             onHandBaguette.StartSwingBaguette();
     }
@@ -170,15 +177,8 @@ public class WeaponHandler : MonoBehaviour
             aimingKeepTimeCoroutine = null;
         }
 
-        if (isCooldown || (curKeepTime < reqAimingKeepTime))
+        if (isCooldown || (curKeepingTime < curReqAimingKeepTime) || (curBread < 1))
         {
-            camController.CameraAim(false);
-            EndThrowReady();
-            return;
-        }
-        else if (curBread < 1)
-        {
-            //던지기 직전에 빵이 없으면 줌 해제
             camController.CameraAim(false);
             EndThrowReady();
             return;
@@ -211,8 +211,13 @@ public class WeaponHandler : MonoBehaviour
         isCooldown = true;
         //onHandBaguette.SetFireAngle(fireAngleTransform.forward);
         OnHandCroissan.GetComponent<ThrowingCroissan>().ThrowCroassian();
-        StartCoroutine(ThrowCooldown());
-        StartCoroutine(ThrowBreadCoroutine());
+    }
+
+    public void ResetState()
+    {
+        isCooldown = false;
+        camController.CameraAim(false);
+        EndThrowReady();
     }
 
     /// <summary>
@@ -236,7 +241,7 @@ public class WeaponHandler : MonoBehaviour
     /// </summary>
     void EndThrowReady()
     {
-        curKeepTime = 0.0f;
+        curKeepingTime = 0.0f;
         fillColor.color = Color.white;
         aimingProgressbar.gameObject.SetActive(false);
         throwPathRaycast.HideThrowPath();
@@ -315,16 +320,16 @@ public class WeaponHandler : MonoBehaviour
     IEnumerator CheckAimingTime()
     {
         //재장전 시간 동안 조준 상태 유지
-        while (curKeepTime < reqAimingKeepTime)
+        while (curKeepingTime < curReqAimingKeepTime)
         {
-            curKeepTime += Time.deltaTime;
-            aimingProgressbar.value = Mathf.Clamp01(curKeepTime / reqAimingKeepTime);
+            curKeepingTime += Time.deltaTime;
+            aimingProgressbar.value = Mathf.Clamp01(curKeepingTime / curReqAimingKeepTime);
             //카메라 위치 보정
-            if (curKeepTime > 0.15)
+            if (curKeepingTime > 0.15)
                 camController.TranslateCametaFoce(scope.transform.position);
             yield return null;
         }
-        curKeepTime = reqAimingKeepTime;
+        curKeepingTime = curReqAimingKeepTime;
         aimingProgressbar.value = 1.0f;
         fillColor.color = Color.green;
     }

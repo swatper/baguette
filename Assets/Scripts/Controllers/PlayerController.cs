@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isThrowReady || weaponHandler.IsCooldown())
                 return;
-            weaponHandlerAni.Play("SwingDiagonal");
+            weaponHandler.PlayAttackMotion();
         }
         //우 "클릭"
         else if (Input.GetMouseButton(1))

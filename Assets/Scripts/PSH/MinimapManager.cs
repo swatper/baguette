@@ -12,6 +12,7 @@ public class MinimapManager : MonoBehaviour
     [SerializeField] private RectTransform playerMark;
     [SerializeField] private RectTransform macaroonMark;
     [SerializeField] private RectTransform croissanMark;
+    //[SerializeField] private RectTransform croissanMark2;
 
     [Header("추척 대상")]
     [Tooltip("플레이어")]
@@ -20,6 +21,7 @@ public class MinimapManager : MonoBehaviour
     [SerializeField] private Transform macaTransform;
     [Tooltip("크로아상")]
     [SerializeField] private Transform croTransform;
+    //[SerializeField] private Transform croTransform2;
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class MinimapManager : MonoBehaviour
         //마크 배치
         UpdateMarkPosition(macaroonMark, macaTransform);
         UpdateMarkPosition(croissanMark, croTransform);
+        //UpdateMarkPosition(croissanMark2, croTransform2);
         UpdateMarkPosition(playerMark, playerTransform);
 
         //플에이어와 화전 방향 연동

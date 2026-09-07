@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class FlyingCroissan : MonoBehaviour
 {
+    [SerializeField] WeaponHandler wHandler;
     [SerializeField] Collider collider;
     [SerializeField] Rigidbody rigid;
     [SerializeField] Crossiant_UI croUI;
