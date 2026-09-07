@@ -312,9 +312,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowingCroissan
   rigid: {fileID: 3591029163217740803}
+  wAni: {fileID: 6248889808313157862}
+  startPos: {x: 0, y: 0, z: 0}
+  center: {x: 0, y: 0, z: 0}
   radius: 0
   speed: 0
-  startPos: {x: 0, y: 0, z: 0}
+  curAngle: 0
 --- !u!1 &3940389496686202597
 GameObject:
   m_ObjectHideFlags: 0

@@ -1659,7 +1659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -68.9, y: 40}
+  m_AnchoredPosition: {x: -68.8999, y: 40}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &37182655
@@ -24557,7 +24557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.7, y: 11.6}
+  m_AnchoredPosition: {x: -115.9, y: 50.2}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1005515077
@@ -47352,6 +47352,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8456719571580814866, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: speed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456719571580814866, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: radius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.34999996
@@ -54811,7 +54819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8964984217056164549, guid: c3835f6b76f982a4cb5077f18533bd4d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.39
+      value: -36.19
       objectReference: {fileID: 0}
     - target: {fileID: 8964984217056164549, guid: c3835f6b76f982a4cb5077f18533bd4d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54819,7 +54827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8964984217056164549, guid: c3835f6b76f982a4cb5077f18533bd4d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 31.44
+      value: 18.19
       objectReference: {fileID: 0}
     - target: {fileID: 8964984217056164549, guid: c3835f6b76f982a4cb5077f18533bd4d, type: 3}
       propertyPath: m_LocalRotation.w

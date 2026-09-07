@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using System.Data.Common;
 
 public class WeaponHandler : MonoBehaviour
 {
@@ -147,7 +148,11 @@ public class WeaponHandler : MonoBehaviour
     /// <summary>
     /// 애니메이션에서 호출할 근접 시작 알림
     /// </summary>
-    public void StartMeleeAttack() => onHandBaguette.StartSwingBaguette();
+    public void StartMeleeAttack()
+    {
+        if (wType == Define.WeaponType.Baguette)
+            onHandBaguette.StartSwingBaguette();
+    }
 
     /// <summary>
     /// 애니메이션에서 호출할 근접 공격 종료 알림

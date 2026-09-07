@@ -1,6 +1,6 @@
-using NUnit.Framework;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class FlyingCroissan : MonoBehaviour
 {
@@ -21,41 +21,15 @@ public class FlyingCroissan : MonoBehaviour
     void Start()
     {
         playerTrans = Managers.Player.transform;
+        StartCoroutine(StartFlying());
     }
-
-    void Update()
-    {
-        if (isShootDown)
-            return;
-        currentAngle += speed * Time.deltaTime;
-        //도 -> 라디안 변환
-        float rad = currentAngle * Mathf.Deg2Rad;
-
-        //회전 궤도 계산
-        Vector3 orbit = new Vector3(Mathf.Cos(rad) * radius, height, Mathf.Sin(rad) * radius);
-
-        //플레이어 위치 보정
-        Vector3 newPos = playerTrans.position + orbit;
-
-        //이동
-        transform.position = newPos;
-
-        //방향 설정
-        Vector3 tangent = new Vector3(-Mathf.Sin(rad), 0f, Mathf.Cos(rad));
-        if (tangent != Vector3.zero)
-        {
-            Quaternion lookRot = Quaternion.LookRotation(tangent);
-            //날아가는 축을 꼬챙이 삼아 회전
-            transform.rotation = lookRot * Quaternion.Euler(0f, 0f, 90f);
-        }
-    }
-
 
     private void OnTriggerEnter(Collider other)
     {
         GameObject obj = other.gameObject;
-        if (obj.CompareTag("Baguette")) // 바게트 태그 체크
+        if (obj.CompareTag("Baguette"))
         {
+            StopAllCoroutines();
             isShootDown = true;
             collider.isTrigger = false;
             rigid.isKinematic = false;
@@ -66,6 +40,35 @@ public class FlyingCroissan : MonoBehaviour
             obj.GetComponent<PlayerController>().SetCroissan();
             croUI.SetCossiantActive();
             Destroy(gameObject);
+        }
+    }
+
+    IEnumerator StartFlying()
+    {
+        while (!isShootDown)
+        {
+            currentAngle += speed * Time.deltaTime;
+            //도 -> 라디안 변환
+            float rad = currentAngle * Mathf.Deg2Rad;
+
+            //회전 궤도 계산
+            Vector3 orbit = new Vector3(Mathf.Cos(rad) * radius, height, Mathf.Sin(rad) * radius);
+
+            //플레이어 위치 보정
+            Vector3 newPos = playerTrans.position + orbit;
+
+            //이동
+            transform.position = newPos;
+
+            //방향 설정
+            Vector3 tangent = new Vector3(-Mathf.Sin(rad), 0f, Mathf.Cos(rad));
+            if (tangent != Vector3.zero)
+            {
+                Quaternion lookRot = Quaternion.LookRotation(tangent);
+                //날아가는 축을 중심으로 회전
+                transform.rotation = lookRot * Quaternion.Euler(0f, 0f, 90f);
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
         }
     }
 }
