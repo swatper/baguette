@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoreStatUpgrade
   upgradeName: HP
   upgradeTable:
-  - price: 5
-    amount: 0
+  - price: 0
+    amount: 5
   - price: 12.25
     amount: 6
   - price: 12.5

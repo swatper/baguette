@@ -41,7 +41,7 @@ public class ShopManager : MonoBehaviour
     [Tooltip("체력 강화 레벨")]
     // 체력은 레벨별로 5 + 레벨 * 1, 최대 11레벨까지(최대치 15). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
     public StoreStatUpgrade hpData;
-    [SerializeField] private Stat curHp;
+    private Stat nxtHpData;
     [SerializeField] private int healthLevel = 0;
     [SerializeField] private float healthPrice;
     [Tooltip("최대 체력 강화 가격 텍스트")]
@@ -56,7 +56,7 @@ public class ShopManager : MonoBehaviour
     [Tooltip("빵 소지강화 레벨")]
     // 빵 소지 최대치는 레벨별로 5 + 레벨 * 2, 최대 11레벨까지(최대치 25). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
     public StoreStatUpgrade breadData;
-    [SerializeField] private Stat curBread;
+    private Stat nxtBreadData;
     [SerializeField] private int breadLevel = 0;
     [SerializeField] private float breadPrice;
     [Tooltip("빵 소지 최대치 강화 가격 텍스트")]
@@ -69,7 +69,7 @@ public class ShopManager : MonoBehaviour
     [Tooltip("이동속도 강화")]
     // 이동속도는 레벨별로 1 + 레벨 * 0.1, 최대 5레벨까지(최대치 1.5). 업그레이드 가격은 레벨별로 15 + 레벨 * 7.5
     public StoreStatUpgrade speedData;
-    [SerializeField] private Stat curSpeed;
+    private Stat nxtSpeedData;
     [SerializeField] private Button speedButton;
     [Tooltip("이동속도 강화 레벨")]
     [SerializeField] private int speedLevel = 0;
@@ -112,6 +112,38 @@ public class ShopManager : MonoBehaviour
         GetCurrentValues();
         SetValueText();
         ButtonInitiate();
+        nxtHpData = hpData.upgradeTable[0];
+        nxtBreadData = breadData.upgradeTable[0];
+        nxtSpeedData = speedData.upgradeTable[0];
+        InitItemPrice();
+    }
+
+    private void InitItemPrice()
+    {
+        //HP
+        healthText.text = nxtHpData.amount.ToString();
+
+        //Bread
+        breadText.text = nxtBreadData.amount.ToString();
+
+        //Speed
+        speedText.text = (nxtSpeedData.amount / 10).ToString("F1");
+
+        nxtHpData = hpData.upgradeTable[1];
+        nxtBreadData = breadData.upgradeTable[1];
+        nxtSpeedData = speedData.upgradeTable[1];
+
+
+        //HP
+        healthPriceText.text = "€ " + nxtHpData.price.ToString("F2");
+        healthUpgradeText.text = nxtHpData.amount.ToString();
+
+        //Bread
+        breadPriceText.text = "€ " + nxtBreadData.price.ToString("F2");
+        breadUpgradeText.text = nxtBreadData.amount.ToString();
+        //Speed
+        speedPriceText.text = "€ " + nxtSpeedData.price.ToString("F2");
+        speedUpgradeText.text = (nxtSpeedData.amount / 10).ToString("F1");
     }
 
     #region 값 가져오고 초기 세팅
@@ -257,7 +289,7 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void SetHealthValue()
     {
-        if (healthLevel > hpData.upgradeTable.Count)
+        if (healthLevel > (hpData.upgradeTable.Count - 1))
         {
             SetHealthValueText();
             ButtonInitiate();
@@ -266,12 +298,12 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        Managers.Money.Money -= curHp.price;
+        Managers.Money.Money -= nxtHpData.price;
         //데이터 변경
         healthLevel += 1;
-        curHp = hpData.upgradeTable[healthLevel];
-        player.GetComponent<PlayerController>().SetMaxHealth((int)curHp.amount);
-        healthPrice = curHp.price;
+        nxtHpData = hpData.upgradeTable[healthLevel];
+        player.GetComponent<PlayerController>().SetMaxHealth((int)nxtHpData.amount);
+        healthPrice = nxtHpData.price;
 
         curMoneyText.text = "€ " + Managers.Money.Money.ToString("F2");
         SetHealthValueText();
@@ -285,7 +317,7 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void SetBreadValue()
     {
-        if (breadLevel > breadData.upgradeTable.Count)
+        if (breadLevel > (breadData.upgradeTable.Count - 1))
         {
             SetBreadValueText();
             ButtonInitiate();
@@ -295,13 +327,13 @@ public class ShopManager : MonoBehaviour
         }
 
 
-        Managers.Money.Money -= curBread.price;
+        Managers.Money.Money -= nxtBreadData.price;
         breadLevel += 1;
-        curBread = breadData.upgradeTable[breadLevel];
+        nxtBreadData = breadData.upgradeTable[breadLevel];
 
         player.GetComponent<PlayerController>().UpgradeBreadBag(2); //급하게 수정
-        breadCounter.SetMaxBread((int)curBread.amount);
-        breadPrice = curBread.price;
+        breadCounter.SetMaxBread((int)nxtBreadData.amount);
+        breadPrice = nxtBreadData.price;
 
         //상점 UI에 표시 글 수정
         curMoneyText.text = "€ " + Managers.Money.Money.ToString("F2");
@@ -322,25 +354,25 @@ public class ShopManager : MonoBehaviour
             ButtonInitiate();
             return;
         }
-        Managers.Money.Money -= curSpeed.price;
+        Managers.Money.Money -= nxtSpeedData.price;
         speedLevel += 1;
 
-        curSpeed = speedData.upgradeTable[speedLevel];
+        nxtSpeedData = speedData.upgradeTable[speedLevel];
 
         // 파워업 여부에 따라 바로 플레이어 스피드를 설정할지, 혹은 파워업 종료 후 복귀속도를 바꿀지 결정
         Debug.Log("IsDrinkPowerUp: " + powerUpManager.GetIsDrinkPowerUp());
         if (powerUpManager.GetIsDrinkPowerUp())
         {
             // 파워업이 되어 있다면 파워업 종료 후 복귀 속도를 바꾼다
-            powerUpManager.SetPlayerInitialSpeed(curSpeed.amount);
+            powerUpManager.SetPlayerInitialSpeed(nxtSpeedData.amount);
         }
         else
         {
             // 파워업이 안돼 있으면 바로 플레이어 이동속도를 바꾼다
-            player.GetComponent<PlayerController>().SetPlayerSpeed(curSpeed.amount);
-            powerUpManager.SetPlayerInitialSpeed(curSpeed.amount);
+            player.GetComponent<PlayerController>().SetPlayerSpeed(nxtSpeedData.amount);
+            powerUpManager.SetPlayerInitialSpeed(nxtSpeedData.amount);
         }
-        speedPrice = curSpeed.price;
+        speedPrice = nxtSpeedData.price;
 
         curMoneyText.text = "€ " + Managers.Money.Money.ToString("F2");
         SetSpeedValueText();

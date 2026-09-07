@@ -42922,9 +42922,6 @@ MonoBehaviour:
   curMoneyText: {fileID: 1478407177}
   healthButton: {fileID: 962629038}
   hpData: {fileID: 11400000, guid: f29175d52d649fd45b257b028516b087, type: 2}
-  curHp:
-    price: 0
-    amount: 0
   healthLevel: 0
   healthPrice: 5
   healthPriceText: {fileID: 1645561880}
@@ -42932,18 +42929,12 @@ MonoBehaviour:
   healthUpgradeText: {fileID: 53093630}
   breadButton: {fileID: 707221742}
   breadData: {fileID: 11400000, guid: 611ffe4da44f8a443ab305067b284ce6, type: 2}
-  curBread:
-    price: 0
-    amount: 0
   breadLevel: 0
   breadPrice: 5
   breadPriceText: {fileID: 1516244830}
   breadText: {fileID: 553308234}
   breadUpgradeText: {fileID: 779298160}
   speedData: {fileID: 11400000, guid: bdeeffec9d2fe544280842fed72d0355, type: 2}
-  curSpeed:
-    price: 0
-    amount: 0
   speedButton: {fileID: 555148325}
   speedLevel: 1
   speedPrice: 15
@@ -56048,5 +56039,5 @@ SceneRoots:
   - {fileID: 471979565}
   - {fileID: 1228822456}
   - {fileID: 6019998554412269900}
-  - {fileID: 1146637721}
   - {fileID: 6428491638717120033}
+  - {fileID: 1146637721}
