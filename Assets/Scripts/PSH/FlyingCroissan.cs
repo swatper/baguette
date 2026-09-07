@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FlyingCroissan : MonoBehaviour
 {
-
     [SerializeField] Collider collider;
     [SerializeField] Rigidbody rigid;
     [Header("플레이어")]
@@ -53,12 +52,18 @@ public class FlyingCroissan : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Baguette")) // 바게트 태그 체크
+        GameObject obj = other.gameObject;
+        if (obj.CompareTag("Baguette")) // 바게트 태그 체크
         {
             isShootDown = true;
             collider.isTrigger = false;
             rigid.isKinematic = false;
             rigid.useGravity = true;
+        }
+        else if (obj.CompareTag("Player"))
+        {
+            obj.GetComponent<PlayerController>().SetCroissan();
+            Destroy(gameObject);
         }
     }
 }

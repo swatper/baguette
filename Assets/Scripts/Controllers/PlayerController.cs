@@ -19,8 +19,11 @@ public class PlayerController : MonoBehaviour
     public InputAction jumpInput;
     [Tooltip("상호작용 키")]
     public InputAction interactionInput;
-    [Tooltip("공격 취소")]
+    [Tooltip("공격 취소(준비중...)")]
     public InputAction cancleInput;
+    [Tooltip("무기 변경")]
+    public InputAction baguetteInput;
+    public InputAction croissanInput;
     [Tooltip("공격 애니메이션(웨폰 헨들러)")]
     public Animator weaponHandlerAni;
     public bool isThrowReady = false;
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         InitInputAction();
     }
+    #region 키 입력 관련
 
     /// <summary>
     /// InputAction 활성화
@@ -80,6 +84,8 @@ public class PlayerController : MonoBehaviour
         moveInput.Enable();
         jumpInput.Enable();
         interactionInput.Enable();
+        baguetteInput.Enable();
+        croissanInput.Enable();
     }
 
     void Update()
@@ -99,9 +105,12 @@ public class PlayerController : MonoBehaviour
         JumpPlayer();
         AttackPlayer();
         InteractionWithOthers();
+        ChangeWeapon();
     }
 
-    #region 플레이어 조작(이동(transform), 공격, 상호작용)  *회전은 카메라에서 조절
+    #endregion
+
+    #region 플레이어 조작(이동(transform), 공격, 상호작용, 무기 변경)  *회전은 카메라에서 조절
     /// <summary>
     /// 플레이어 이동 (Rigid 사용)
     /// </summary>
@@ -216,7 +225,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     gameObject.GetComponentInChildren<OverHeadIconHandler>().StartShowBread();
-                    weaponHandler.SupplyBread();
+                    weaponHandler.SupplyBaguette();
                 }
 
             }
@@ -225,10 +234,26 @@ public class PlayerController : MonoBehaviour
             else if (bread != null)
             {
                 gameObject.GetComponentInChildren<OverHeadIconHandler>().StartShowBread();
-                weaponHandler.SupplyBread();
+                weaponHandler.SupplyBaguette();
             }
         }
     }
+    void ChangeWeapon()
+    {
+        if (baguetteInput.triggered)
+        {
+            weaponHandler.ChangeBread(Define.WeaponType.Baguette);
+            return;
+        }
+
+        else if (croissanInput.triggered)
+        {
+            weaponHandler.ChangeBread(Define.WeaponType.Croissan);
+            return;
+        }
+
+    }
+
 
     void CancleZoom()
     {
@@ -239,8 +264,6 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
-
     #region 가게 상호 작용
     /// <summary>
     /// 플레이어가 UI 진입 시, 키 입력을 막기 위한 함수
@@ -368,15 +391,17 @@ public class PlayerController : MonoBehaviour
 
     public void UpgradeBreadBag(int max)
     {
-        weaponHandler.UpgradeMaxBread(max);
+        weaponHandler.UpgradeMaxBaguette(max);
     }
 
     public void AddCurBread(int amount)
     {
-        weaponHandler.AddCurBread(amount);
+        weaponHandler.AddCurBaguette(amount);
     }
 
     #endregion
+
+    public void SetCroissan() => weaponHandler.UnlockCroissan();
 
     private void OnCollisionEnter(Collision collision)
     {

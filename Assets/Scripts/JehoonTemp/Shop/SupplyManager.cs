@@ -13,11 +13,6 @@ public class SupplyManager : MonoBehaviour
         SetButterCount(0);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     #region Getter, Setter, 더하기, 빼기
     /// <summary>
     /// 현재 소지한 음료 개수

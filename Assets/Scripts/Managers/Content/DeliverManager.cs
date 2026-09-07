@@ -104,7 +104,7 @@ public class DeliverManager
             overHeadIconHandler.StartShowEuro();
         }
 
-        weaponHandler.ResetSetBread(curBread - deliveryCard.Quantity);
+        weaponHandler.ResetSetBaguette(curBread - deliveryCard.Quantity);
 
         // Increase Health
         player.IncreaseHealth();

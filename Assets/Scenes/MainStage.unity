@@ -9097,6 +9097,58 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
     m_Priority: 0
+  baguetteInput:
+    m_Name: Baguette Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3d1f1c4c-42bf-4638-97bd-088bcaabcce6
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: d18bf5b3-ce50-4be6-b1f3-5174225ef1f5
+      m_Path: <Keyboard>/1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Baguette Input
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 88437a46-233c-43bc-a335-a61dca8c2715
+      m_Path: <Keyboard>/f1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Baguette Input
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  croissanInput:
+    m_Name: Croissan Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f00be165-0634-409d-aef1-c5be6ce93d9b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: d9125a54-b0bb-40c0-916e-b8c5f27af9a0
+      m_Path: <Keyboard>/2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Croissan Input
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 8b19e8c5-9aef-45e1-8317-a132a92925dd
+      m_Path: <Keyboard>/f2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Croissan Input
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
   weaponHandlerAni: {fileID: 921402737}
   isThrowReady: 0
   rightClickTime: 0
@@ -22614,6 +22666,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 549481168}
+  - {fileID: 1882112911}
   m_Father: {fileID: 1303219960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &921402739
@@ -22633,8 +22686,10 @@ MonoBehaviour:
   weaponHandlerAni: {fileID: 921402737}
   aimingProgressbar: {fileID: 255179941}
   fillColor: {fileID: 1025865626}
+  wType: 0
   BreadPrefs: {fileID: 329643573421902685, guid: 0c8de91f24b68ee4796e1fc5906cba8c, type: 3}
-  onHandBread: {fileID: 0}
+  onHandBaguette: {fileID: 0}
+  OnHandCroissan: {fileID: 2110403186}
   MaxBread: 5
   curBread: 0
   fireAngleTransform: {fileID: 1303219960}
@@ -22647,6 +22702,7 @@ MonoBehaviour:
   OnBreadCountChanged:
     m_PersistentCalls:
       m_Calls: []
+  isUnlockCroissan: 0
 --- !u!4 &926989751 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6620680352977540986, guid: e68ae4cd6a5488444b42c0c641986c4d, type: 3}
@@ -43498,7 +43554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.2}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -60.00006}
+  m_AnchoredPosition: {x: -20, y: -60}
   m_SizeDelta: {x: -80, y: -160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1740930293
@@ -46622,6 +46678,84 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbc65d6201ccb1845b051b6af26357b4, type: 3}
+--- !u!1001 &1882112910
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 921402738}
+    m_Modifications:
+    - target: {fileID: 3591029163217740803, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868971720489448146, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_Name
+      value: CroissanForThrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868971720489448146, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.34999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.34999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.6819994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.24699998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.95800024
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+--- !u!4 &1882112911 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8964984217056164549, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+  m_PrefabInstance: {fileID: 1882112910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1888952103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8204704265452955992, guid: 3a4d37d14a4e49c40bdec5fc9d2308a9, type: 3}
@@ -52324,6 +52458,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109650904}
   m_CullTransparentMesh: 1
+--- !u!1 &2110403186 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3868971720489448146, guid: 7043193e8efaf0745bf6075733cd1aed, type: 3}
+  m_PrefabInstance: {fileID: 1882112910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2112560566 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1265587311757690190, guid: 112135c51c7700e4baff9f37c73fed30, type: 3}
@@ -53897,7 +54036,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3868971720489448146, guid: c3835f6b76f982a4cb5077f18533bd4d, type: 3}
       propertyPath: m_Name
-      value: Croissan
+      value: FlyingCroissan(Item)
       objectReference: {fileID: 0}
     - target: {fileID: 8964984217056164549, guid: c3835f6b76f982a4cb5077f18533bd4d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -53939,7 +54078,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6828199738231480887, guid: c3835f6b76f982a4cb5077f18533bd4d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

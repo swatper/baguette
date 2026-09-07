@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class WeaponHandler : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class WeaponHandler : MonoBehaviour
     public Define.WeaponType wType;
     [Tooltip("무기 프리팹(바게트 빵)")]
     public Baguette BreadPrefs;
-    public Baguette onHandBread;
+    public Baguette onHandBaguette;
+    public GameObject OnHandCroissan;
     [Tooltip("최대 빵 보유 갯수")]
     [SerializeField] private int MaxBread = 5;
     [Tooltip("현재 빵 보유 횟수, 자동으로 초기화")]
@@ -40,26 +42,27 @@ public class WeaponHandler : MonoBehaviour
     [Tooltip("빵 개수 변경 이벤트")]
     public UnityEvent<int> OnBreadCountChanged = new UnityEvent<int>();
 
+    [SerializeField] bool isUnlockCroissan = true;
+
     void Awake()
     {
         wType = Define.WeaponType.Baguette;
-        ResetSetBread(MaxBread);
+        ResetSetBaguette(MaxBread);
     }
 
     //시작 시점에 빵 갯수 초기화  
     void Start()
     {
-        CreateBread(1);
+        CreateBaguette(1);
         //UI 표시 빵 갯수 초기화
         CountEventInvoke();
     }
 
     #region 빵 사용 관련
-
     /// <summary>
     /// 빵 충전/보급
     /// </summary>
-    public void SupplyBread()
+    public void SupplyBaguette()
     {
         curBread = MaxBread;
         CountEventInvoke();
@@ -69,13 +72,15 @@ public class WeaponHandler : MonoBehaviour
     /// 빵 최대 보유 갯수 증가
     /// </summary>
     /// <param name="amount">증가량</param>
-    public void UpgradeMaxBread(int amount)
+    public void UpgradeMaxBaguette(int amount)
     {
         MaxBread += amount;
         CountEventInvoke();
     }
 
-    public void ResetSetBread(int count)
+
+
+    public void ResetSetBaguette(int count)
     {
         curBread = count;
         if (curBread == 0)
@@ -83,7 +88,7 @@ public class WeaponHandler : MonoBehaviour
         CountEventInvoke();
     }
 
-    public void AddCurBread(int amount)
+    public void AddCurBaguette(int amount)
     {
         curBread += amount;
         CountEventInvoke();
@@ -93,7 +98,7 @@ public class WeaponHandler : MonoBehaviour
     /// 빵 생성 (초기화 및 애니메이션에서 호출)
     /// </summary>
     /// <param name="type"></param>
-    public void CreateBread(int type)
+    public void CreateBaguette(int type)
     {
         if (curBread <= 0)
         {
@@ -106,25 +111,48 @@ public class WeaponHandler : MonoBehaviour
         CountEventInvoke();
 
         //빵 프리팹 생성
-        onHandBread = Instantiate(BreadPrefs, transform);
+        onHandBaguette = Instantiate(BreadPrefs, transform);
         //빵 위치 조정
-        onHandBread.transform.localPosition = new Vector3(0.62f, 0.2f, 0.7f);
-        onHandBread.transform.localRotation = Quaternion.identity;
-        onHandBread.transform.localScale = Vector3.one;
+        onHandBaguette.transform.localPosition = new Vector3(0.62f, 0.2f, 0.7f);
+        onHandBaguette.transform.localRotation = Quaternion.identity;
+        onHandBaguette.transform.localScale = Vector3.one;
     }
 
+    /// <summary>
+    /// 빵(무기) 변경
+    /// </summary>
+    /// <param name="type">무기 유형</param>
+    public void ChangeBread(Define.WeaponType type)
+    {
+        //이미 들고 있는 무기면 무시
+        if (wType == type)
+            return;
+        if (type == Define.WeaponType.Croissan && !isUnlockCroissan)
+            return;
+
+        wType = type;
+        bool isBaguette = wType == Define.WeaponType.Baguette;
+        onHandBaguette.gameObject.SetActive(isBaguette);
+        OnHandCroissan.SetActive(!isBaguette);
+    }
+
+    public void UnlockCroissan()
+    {
+        isUnlockCroissan = true;
+    }
     #endregion
 
     #region 빵 공격 관련
+
     /// <summary>
     /// 애니메이션에서 호출할 근접 시작 알림
     /// </summary>
-    public void StartMeleeAttack() => onHandBread.StartSwingBaguette();
+    public void StartMeleeAttack() => onHandBaguette.StartSwingBaguette();
 
     /// <summary>
     /// 애니메이션에서 호출할 근접 공격 종료 알림
     /// </summary>
-    public void EndMeleeAttack() => onHandBread.EndSwingBaguette();
+    public void EndMeleeAttack() => onHandBaguette.EndSwingBaguette();
 
     /// <summary>
     /// 무기(빵) 던지기
@@ -163,10 +191,10 @@ public class WeaponHandler : MonoBehaviour
             isCooldown = true;
             CountEventInvoke();
             //발사 각도 전달하기
-            onHandBread.SetFireAngle(fireAngleTransform.forward);
+            onHandBaguette.SetFireAngle(fireAngleTransform.forward);
             //빵 던지기
-            onHandBread.ThrowBaguette();
-            onHandBread = null;
+            onHandBaguette.ThrowBaguette();
+            onHandBaguette = null;
             //빵 재장전
             weaponHandlerAni.Play("ReloadBaguette");
             //시간 측정
@@ -177,7 +205,9 @@ public class WeaponHandler : MonoBehaviour
 
     void ThrowCroissan()
     {
-
+        OnHandCroissan.GetComponent<ThrowingCroissan>().ThrowCroassian();
+        isCooldown = true;
+        StartCoroutine(ThrowCooldown());
     }
     /// <summary>
     /// 던지기 쿨타임 여부 반환
@@ -272,6 +302,10 @@ public class WeaponHandler : MonoBehaviour
         EndThrowReady();
     }
 
+    /// <summary>
+    /// 조준 게이지 코루틴
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CheckAimingTime()
     {
         //재장전 시간 동안 조준 상태 유지

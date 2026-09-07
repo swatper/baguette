@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Baguette : MonoBehaviour
+public class Baguette : MonoBehaviour, IBaseWeapon
 {
     [Header("빵 컨포넌트")]
     public Animator breadAni;
@@ -81,10 +81,8 @@ public class Baguette : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("충돌");
         if ((collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Floor")) && isThrow)
         {
-            Debug.Log("부착");
             SetStuck(collision);
         }
         else if (collision.gameObject.CompareTag("Enemy"))
@@ -94,8 +92,6 @@ public class Baguette : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("공격");
-
             EnemyController enemy = collision.GetComponent<EnemyController>();
             if (isThrow)
             {
@@ -112,7 +108,10 @@ public class Baguette : MonoBehaviour
         }
         else if (collision.CompareTag("Item"))
         {
-            collision.GetComponent<KnockbackObject>().ApplyKnockback(transform.position);
+            KnockbackObject obj = collision.GetComponent<KnockbackObject>();
+            if (obj != null)
+                obj.ApplyKnockback(transform.position);
+
         }
         else if (collision.CompareTag("NPC") && isThrow)
         {

@@ -224,12 +224,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8964984217056164549}
   - component: {fileID: 2691379823536065899}
+  - component: {fileID: 1808176957414070576}
   - component: {fileID: 3591029163217740803}
   - component: {fileID: 1003796752489446201}
   - component: {fileID: 1368553192137943745}
   m_Layer: 0
   m_Name: Croissan_Flying
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,6 +272,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.5, y: 1.8, z: 2.7}
   m_Center: {x: 0.17, y: 0.4, z: 0.7}
+--- !u!135 &1808176957414070576
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868971720489448146}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.62
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3591029163217740803
 Rigidbody:
   m_ObjectHideFlags: 0
