@@ -401,7 +401,11 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    public void SetCroissan() => weaponHandler.UnlockCroissan();
+    public void SetCroissan()
+    {
+        gameObject.GetComponentInChildren<OverHeadIconHandler>().StartShowCroissan();
+        weaponHandler.UnlockCroissan();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

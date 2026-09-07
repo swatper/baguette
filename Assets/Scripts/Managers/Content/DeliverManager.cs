@@ -116,6 +116,11 @@ public class DeliverManager
         Managers.Money.Money = Managers.Money.Money + deliveryCard.Reward;
     }
 
+    /// <summary>
+    /// 비대면(?) 배달용
+    /// </summary>
+    /// <param name="villager"></param>
+    /// <param name="amount"></param>
     public void CheckDelivery(VillagerInteractionController villager, int amount)
     {
         DeliveryPair pair = GetDeliveryPair(villager);
@@ -133,8 +138,8 @@ public class DeliverManager
 
         Managers.Player.IncreaseHealth();
         DestroyDelivery(pair);
-
-        Managers.Money.Money += deliveryCard.Reward;
+        //원거리 반납 시 가격 반토막
+        Managers.Money.Money += deliveryCard.Reward / 2;
     }
 
     public void DestroyDelivery(UI_DeliveryCard deliveryCard)

@@ -6,6 +6,7 @@ public class FlyingCroissan : MonoBehaviour
 {
     [SerializeField] Collider collider;
     [SerializeField] Rigidbody rigid;
+    [SerializeField] Crossiant_UI croUI;
     [Header("플레이어")]
     [SerializeField] Transform playerTrans;
     [Header("비행 정보")]
@@ -63,6 +64,7 @@ public class FlyingCroissan : MonoBehaviour
         else if (obj.CompareTag("Player"))
         {
             obj.GetComponent<PlayerController>().SetCroissan();
+            croUI.SetCossiantActive();
             Destroy(gameObject);
         }
     }

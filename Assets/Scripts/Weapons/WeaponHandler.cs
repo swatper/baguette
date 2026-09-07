@@ -159,14 +159,6 @@ public class WeaponHandler : MonoBehaviour
     /// </summary>
     public void ThrowWeapon()
     {
-        if (wType == Define.WeaponType.Baguette)
-            ThrowBaguette();
-        else if (wType == Define.WeaponType.Croissan)
-            ThrowCroissan();
-    }
-
-    void ThrowBaguette()
-    {
         if (aimingKeepTimeCoroutine != null)
         {
             StopCoroutine(aimingKeepTimeCoroutine);
@@ -186,29 +178,38 @@ public class WeaponHandler : MonoBehaviour
             EndThrowReady();
             return;
         }
-        else
-        {
-            isCooldown = true;
-            CountEventInvoke();
-            //발사 각도 전달하기
-            onHandBaguette.SetFireAngle(fireAngleTransform.forward);
-            //빵 던지기
-            onHandBaguette.ThrowBaguette();
-            onHandBaguette = null;
-            //빵 재장전
-            weaponHandlerAni.Play("ReloadBaguette");
-            //시간 측정
-            StartCoroutine(ThrowCooldown());
-            StartCoroutine(ThrowBreadCoroutine());
-        }
+
+        if (wType == Define.WeaponType.Baguette)
+            ThrowBaguette();
+        else if (wType == Define.WeaponType.Croissan)
+            ThrowCroissan();
+    }
+
+    void ThrowBaguette()
+    {
+        isCooldown = true;
+        CountEventInvoke();
+        //발사 각도 전달하기
+        onHandBaguette.SetFireAngle(fireAngleTransform.forward);
+        //빵 던지기
+        onHandBaguette.ThrowBaguette();
+        onHandBaguette = null;
+        //빵 재장전
+        weaponHandlerAni.Play("ReloadBaguette");
+        //시간 측정
+        StartCoroutine(ThrowCooldown());
+        StartCoroutine(ThrowBreadCoroutine());
     }
 
     void ThrowCroissan()
     {
-        OnHandCroissan.GetComponent<ThrowingCroissan>().ThrowCroassian();
         isCooldown = true;
+        //onHandBaguette.SetFireAngle(fireAngleTransform.forward);
+        OnHandCroissan.GetComponent<ThrowingCroissan>().ThrowCroassian();
         StartCoroutine(ThrowCooldown());
+        StartCoroutine(ThrowBreadCoroutine());
     }
+
     /// <summary>
     /// 던지기 쿨타임 여부 반환
     /// </summary>

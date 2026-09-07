@@ -24,6 +24,10 @@ public class VillagerInteractionController : MonoBehaviour
         Managers.Deliver.CompleteDelivery(player, this);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="type">0: 대면 배달, 1: 비대면 배달</param>
     public void TakeBaguette()
     {
         Managers.Deliver.CheckDelivery(this, 1);
