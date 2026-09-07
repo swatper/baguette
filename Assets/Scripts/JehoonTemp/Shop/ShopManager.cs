@@ -42,7 +42,7 @@ public class ShopManager : MonoBehaviour
     // 체력은 레벨별로 5 + 레벨 * 1, 최대 11레벨까지(최대치 15). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
     public StoreStatUpgrade hpData;
     [SerializeField] private Stat curHp;
-    [SerializeField] private int healthLevel = 1;
+    [SerializeField] private int healthLevel = 0;
     [SerializeField] private float healthPrice;
     [Tooltip("최대 체력 강화 가격 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI healthPriceText;
@@ -57,7 +57,7 @@ public class ShopManager : MonoBehaviour
     // 빵 소지 최대치는 레벨별로 5 + 레벨 * 2, 최대 11레벨까지(최대치 25). 업그레이드 가격은 레벨별로 5 + 레벨 * 2.5
     public StoreStatUpgrade breadData;
     [SerializeField] private Stat curBread;
-    [SerializeField] private int breadLevel = 1;
+    [SerializeField] private int breadLevel = 0;
     [SerializeField] private float breadPrice;
     [Tooltip("빵 소지 최대치 강화 가격 텍스트")]
     [SerializeField] private TMPro.TextMeshProUGUI breadPriceText;
@@ -294,14 +294,16 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        //상점 UI에 표시 글 수정
+
         Managers.Money.Money -= curBread.price;
         breadLevel += 1;
         curBread = breadData.upgradeTable[breadLevel];
 
+        player.GetComponent<PlayerController>().UpgradeBreadBag(2); //급하게 수정
         breadCounter.SetMaxBread((int)curBread.amount);
         breadPrice = curBread.price;
 
+        //상점 UI에 표시 글 수정
         curMoneyText.text = "€ " + Managers.Money.Money.ToString("F2");
         SetBreadValueText();
         ButtonInitiate();

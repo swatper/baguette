@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class WeaponHandler : MonoBehaviour
 {
+    [SerializeField] BreadCounter breadC;
     [SerializeField] GameObject scope;
     [SerializeField] private CamController camController;
     [SerializeField] private Animator weaponHandlerAni;
@@ -67,7 +68,7 @@ public class WeaponHandler : MonoBehaviour
     public void SupplyBaguette()
     {
         curBread = MaxBread;
-        CountEventInvoke();
+        breadC.SetCurrentBread(curBread);
     }
 
     /// <summary>

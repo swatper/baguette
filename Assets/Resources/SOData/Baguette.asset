@@ -18,21 +18,21 @@ MonoBehaviour:
     amount: 5
   - price: 12.25
     amount: 7
-  - price: 12.5
+  - price: 19.5
     amount: 9
-  - price: 12.75
+  - price: 29
     amount: 11
-  - price: 13
+  - price: 36.1
     amount: 13
-  - price: 13.25
+  - price: 45.7
     amount: 15
-  - price: 13.5
+  - price: 54.3
     amount: 17
-  - price: 13.75
+  - price: 62
     amount: 19
-  - price: 14
+  - price: 72.1
     amount: 21
-  - price: 14.25
+  - price: 85
     amount: 23
-  - price: 14.5
+  - price: 100
     amount: 25

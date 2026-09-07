@@ -16,7 +16,7 @@ public class FlyingCroissan : MonoBehaviour
     [SerializeField] float speed;
     [Tooltip("높이")]
     [SerializeField] float height;
-    private float currentAngle = 0f;
+    private float currentAngle = 90f;
     private bool isShootDown = false;
     void Start()
     {
