@@ -120,7 +120,6 @@ public class PlayerController : MonoBehaviour
 
         if (movePos.sqrMagnitude < 0.001f)
             return;
-
         // 기존에 있던 수평 속도 제거
         Vector3 currentVel = pRigid.linearVelocity;
         currentVel.x = 0;
@@ -139,6 +138,10 @@ public class PlayerController : MonoBehaviour
 
         //플레이어 이동 위치 설정 및 이동
         Vector3 movementDirection = (camForward * movePos.y) + (camRight * movePos.x);
+        //떨림 방지
+        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, movementDirection.normalized, 0.6f, LayerMask.GetMask("Block")))
+            return;
+
         transform.Translate(movementDirection * Time.deltaTime * walkSpeed, Space.World);
     }
 
